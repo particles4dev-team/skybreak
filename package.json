@@ -1,0 +1,30 @@
+{
+  "name": "githook",
+  "version": "1.0.0",
+  "description": "auto deploy tool for iojs-vi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/particle4dev/iojs-vi-git-hook.git"
+  },
+  "keywords": [
+    "git",
+    "github",
+    "deploy",
+    "auto",
+    "iojs",
+    "vi"
+  ],
+  "author": "Le Hoang <particle4dev@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/particle4dev/iojs-vi-git-hook/issues"
+  },
+  "homepage": "https://github.com/particle4dev/iojs-vi-git-hook",
+  "dependencies": {
+    "gith": "^1.0.4"
+  }
+}
