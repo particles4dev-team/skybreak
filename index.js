@@ -1,7 +1,6 @@
 // Listen on port 8082
-var gith = require('gith').create( 8082 );
-
-var sites = require('sites');
+var gith 	= require('gith').create( 8082 );
+var sites 	= require('./sites');
 
 gith({
     repo: 'iojs/iojs-vi'

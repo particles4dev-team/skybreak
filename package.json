@@ -1,6 +1,6 @@
 {
-  "name": "githook",
-  "version": "1.0.0",
+  "name": "githooks",
+  "version": "1.0.0-rc2",
   "description": "auto deploy tools for particle4dev team",
   "main": "index.js",
   "scripts": {
