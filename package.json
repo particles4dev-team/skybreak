@@ -1,6 +1,6 @@
 {
-  "name": "githook",
-  "version": "1.0.0",
+  "name": "githooks",
+  "version": "1.0.0-rc2",
   "description": "auto deploy tools for particle4dev team",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/particle4dev/git-hooks",
   "dependencies": {
-    "gith": "^1.0.4"
+    "eventemitter2": "^0.4.14",
+    "lodash": "^3.9.3"
   }
 }
