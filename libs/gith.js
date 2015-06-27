@@ -246,7 +246,9 @@ var listen = function( eventaur, port ) {
             console.log( gith.ips, req.connection.remoteAddress );
             console.log( gith.ips, "*" );
             console.log(req.connection.remoteAddress);
-      if ( _.indexOf( gith.ips, req.connection.remoteAddress ) >= 0 ||
+     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+     console.log(ip, 'zzz'); 
+     if ( _.indexOf( gith.ips, req.connection.remoteAddress ) >= 0 ||
            _.indexOf( gith.ips, "*" ) >= 0 ) {
         if ( /^payload=/.test( data ) ) {
           var payload = JSON.parse( querystring.unescape(data.slice(8)) );
