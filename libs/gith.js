@@ -31,9 +31,13 @@ var listen = function( eventaur, port ) {
             console.log(_.indexOf( gith.ips, "*" ));
             console.log( gith.ips, req.connection.remoteAddress );
             console.log( gith.ips, "*" );
+            console.log(req.connection);
             if ( _.indexOf( gith.ips, req.connection.remoteAddress ) >= 0 ||
                      _.indexOf( gith.ips, "*" ) >= 0 ) {
                 eventaur.emit( 'payload', data );
+                res.writeHead( 200, {
+                    'Content-type': 'text/html'
+                });
             }            
             res.end();
         });
