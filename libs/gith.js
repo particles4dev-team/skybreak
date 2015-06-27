@@ -29,6 +29,7 @@ var listen = function( eventaur, port ) {
         req.on( "end", function() {
             if ( _.indexOf( gith.ips, req.connection.remoteAddress ) >= 0 ||
                      _.indexOf( gith.ips, "*" ) >= 0 ) {
+                console.log(data);
                 eventaur.emit( 'payload', data );
             }            
             res.end();
