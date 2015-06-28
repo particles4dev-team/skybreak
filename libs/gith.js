@@ -2,7 +2,7 @@ var http                = require("http");
 var EventEmitter2       = require( "eventemitter2" ).EventEmitter2;
 var util                = require("util");
 var _                   = require("lodash");
-var githubHook          = require("./github");
+var GithubHook          = require("./github");
 var Middleware          = require('./middlewares');
 
 // the listen method - this gets added/bound in
@@ -48,6 +48,7 @@ var Gith = function(eventaur, settings) {
     });
 
     this._hooks               = new Middleware();
+    var githubHook = new GithubHook(); 
     githubHook.setServer(this);
     this._hooks.register('github', githubHook.action, githubHook);
 
