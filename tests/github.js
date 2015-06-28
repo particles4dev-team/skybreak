@@ -1,5 +1,5 @@
 var assert      = require("assert");
-var githubHook  = require("../libs/github");
+var GithubHook  = require("../libs/github");
 
 describe('Array', function(){
     describe('#indexOf()', function(){
@@ -166,6 +166,7 @@ describe('Array', function(){
                 pusher: 'particle4dev',
                 owner: 'particle4dev'
             };
+            var githubHook = new GithubHook();
             var output = githubHook.simplifyPayload(input);
 
             assert.equal(expect.owner, output.owner);
