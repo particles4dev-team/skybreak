@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "hello"
-
 cd /var/www/iojs-vi.com
 
 if [ ! -d /var/www/iojs-vi.com/iojs-vi ]; then

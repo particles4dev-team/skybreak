@@ -25,7 +25,8 @@ var listen = function( eventaur, port ) {
                 data += chunk;
             });
         }
-
+        var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        console.log(ip); 
         req.on( "end", function() {
             eventaur.emit( 'payload', data );
             res.writeHead( 200, {
@@ -54,9 +55,6 @@ var Gith = function(eventaur, settings) {
     eventaur.on( 'payload', function( originalPayload ) {
         gith._hooks.start(originalPayload);
     });
-    this.on('add', function () {
-        console.log('word');
-    })
 };
 
 // inherit the EventEmitter2 stuff
