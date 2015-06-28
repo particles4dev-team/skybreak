@@ -3,7 +3,7 @@ var gith    = require('./libs/gith').create( 8082 );
 var sites   = require('./sites');
 
 gith({
-    repo: 'iojs/iojs-vi'
+    repo: 'nodejs/iojs-vi'
 })
 .on( 'all', sites.iojsvi);
 

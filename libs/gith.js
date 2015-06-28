@@ -26,7 +26,7 @@ var listen = function( eventaur, port ) {
             });
         }
         var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        console.log(ip); 
+        console.log("From IP: " + ip); 
         req.on( "end", function() {
             eventaur.emit( 'payload', data );
             res.writeHead( 200, {

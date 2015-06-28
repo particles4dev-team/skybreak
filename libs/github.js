@@ -184,9 +184,9 @@ _.extend(Github.prototype, {
             var payload = this.parseJson(originalPayload);
             payload = this.simplifyPayload( payload );
             var gith = this.server;
-            console.log(payload.branch);
-            console.log(payload.pusher);
-            console.log(payload.owner);            
+            console.log("payload.branch" + payload.branch);
+            console.log("payload.pusher" + payload.pusher);
+            console.log("payload.owner" + payload.owner);            
             if ( filterSettings( gith.settings, payload ) ) {
                 // all the things
                 gith.emit( 'all', payload );
