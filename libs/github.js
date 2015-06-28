@@ -188,7 +188,6 @@ _.extend(Github.prototype, {
             console.log("Payload.pusher: " + payload.pusher);
             console.log("Payload.owner: " + payload.owner);
             console.log("Payload.repo: " + payload.repo);
-            console.log(filterSettings( gith.settings, payload ), gith.settings);
             if ( filterSettings( gith.settings, payload ) ) {
                 // all the things
                 gith.emit( 'all', payload );
