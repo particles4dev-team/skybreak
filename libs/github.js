@@ -180,48 +180,51 @@ _.extend(Github.prototype, {
     },
 
     action: function(originalPayload){
-    try {
-        var payload = this.parseJson(originalPayload);
-        payload = this.simplifyPayload( payload );
-        var gith = this.server;
-        if ( filterSettings( gith.settings, payload ) ) {
-            // all the things
-            gith.emit( 'all', payload );
+        try {
+            var payload = this.parseJson(originalPayload);
+            payload = this.simplifyPayload( payload );
+            var gith = this.server;
+            console.log(payload.branch);
+            console.log(payload.pusher);
+            console.log(payload.owner);            
+            if ( filterSettings( gith.settings, payload ) ) {
+                // all the things
+                gith.emit( 'all', payload );
 
-            // did we do any branch work?
-            if ( originalPayload.created && originalPayload.forced && payload.branch ) {
-                gith.emit( 'branch:add', payload );
-            }
-            if (    originalPayload.deleted && originalPayload.forced && payload.branch ) {
-                gith.emit( 'branch:delete', payload );
-            }
+                // did we do any branch work?
+                if ( originalPayload.created && originalPayload.forced && payload.branch ) {
+                    gith.emit( 'branch:add', payload );
+                }
+                if (    originalPayload.deleted && originalPayload.forced && payload.branch ) {
+                    gith.emit( 'branch:delete', payload );
+                }
 
-            // how about files?
-            if ( payload.files.added.length > 0 ) {
-                gith.emit( 'file:add', payload );
-            }
-            if ( payload.files.deleted.length > 0 ) {
-                gith.emit( 'file:delete', payload );
-            }
-            if ( payload.files.modified.length > 0 ) {
-                gith.emit( 'file:modify', payload );
-            }
-            if ( payload.files.all.length > 0 ) {
-                gith.emit( 'file:all', payload );
-            }
+                // how about files?
+                if ( payload.files.added.length > 0 ) {
+                    gith.emit( 'file:add', payload );
+                }
+                if ( payload.files.deleted.length > 0 ) {
+                    gith.emit( 'file:delete', payload );
+                }
+                if ( payload.files.modified.length > 0 ) {
+                    gith.emit( 'file:modify', payload );
+                }
+                if ( payload.files.all.length > 0 ) {
+                    gith.emit( 'file:all', payload );
+                }
 
-            // tagging?
-            if ( payload.tag && originalPayload.created ) {
-                gith.emit( 'tag:add', payload );
-            }
-            if ( payload.tag && originalPayload.deleted ) {
-                gith.emit( 'tag:delete', payload );
+                // tagging?
+                if ( payload.tag && originalPayload.created ) {
+                    gith.emit( 'tag:add', payload );
+                }
+                if ( payload.tag && originalPayload.deleted ) {
+                    gith.emit( 'tag:delete', payload );
+                }
             }
         }
-    }
-    catch(e){
-        console.log(e);
-    }
+        catch(e){
+            console.log(e);
+        }
     }
 });
 
