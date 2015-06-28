@@ -6,10 +6,8 @@ var execOptions = {
 };
 
 module.exports = function(payload){
-    console.log('particle4dev-team', payload);
     if( payload.branch === 'master' )
     {
-        console.log('particle4dev-team', payload.branch);
         // Exec a shell script
         // execFile('./hook.sh', execOptions, function(error, stdout, stderr) {
         //     // Log success in some manner
