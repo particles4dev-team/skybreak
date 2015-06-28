@@ -6,6 +6,7 @@ var execOptions = {
 };
 
 module.exports = function(payload){
+	console.log('iojs-vi: branch' + payload.branch );
     if( payload.branch === 'live' )
     {
         // Exec a shell script
