@@ -16,10 +16,3 @@ gith({
     repo: 'particle4devs-team/particle4dev-sites'
 })
 .on( 'all', sites.particle4devteam);
-/**
-gith({
-    repo: '*'
-})
-.on( 'all', sites.particle4devteam);
-*/
- sites.iojsvi();
