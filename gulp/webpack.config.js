@@ -1,4 +1,4 @@
-var path = require('path');
+var path    = require('path');
 var webpack = require('webpack');
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__rootPath, 'build'),
     filename: 'bundle.js',
     publicPath: '/static/'
   },
@@ -24,7 +24,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       loaders: ['react-hot', 'babel'],
-      include: path.join(__dirname, 'src')
+      include: path.join(__rootPath, 'src')
     }]
   }
 };
