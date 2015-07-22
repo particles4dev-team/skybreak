@@ -5,9 +5,9 @@ const RouteHandler = Router.RouteHandler;
 
 let Layout = React.createClass({
   render: function () {
-    return (
+  	return (
       <div>
-        <RouteHandler />
+        <RouteHandler {...this.props} />
       </div>
     )
   }

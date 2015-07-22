@@ -6,11 +6,11 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
-    './src/index'
+    './src/client'
   ],
   output: {
     path: path.join(__rootPath, 'build'),
-    filename: 'bundle.js',
+    filename: 'frontend.js',
     publicPath: '/static/'
   },
   plugins: [
