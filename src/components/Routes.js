@@ -4,7 +4,8 @@ import Router from 'react-router';
 import NotFound from "./NotFound";
 import Home from "./HomePage";
 import About from "./AboutPage";
-import Inbox from "./InboxPage";
+import Categories from "./CategoriesPage";
+import Post from "./PostPage";
 import Layout from "./Layout";
 
 const Route           = Router.Route;
@@ -18,7 +19,8 @@ let routes = (
     <DefaultRoute name="home" handler={Home}/>
 
     <Route name="about" path="/about" handler={About}/>
-    <Route name="inbox" path="/inbox" handler={Inbox}/>
+    <Route name="categories" path="/categories" handler={Categories}/>
+    <Route name="post" path="/post/:id" handler={Post}/>
 
     <NotFoundRoute name="not-found" handler={NotFound}/>
   </Route>

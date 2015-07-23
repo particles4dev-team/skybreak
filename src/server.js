@@ -6,10 +6,34 @@ import routes from './components/Routes';
 const t = require('transducers.js');
 const { range, seq, compose, map, filter, take } = t;
 
+import fs from 'fs';
+import path from 'path';
+import handlebars  from 'handlebars';
+
+/**
+ * Define isomorphic constants.
+ */
+global.__CLIENT__ = false;
+global.__SERVER__ = true;
+
 let app = express();
 app.use(bodyParser.json());
 
 app.use(cors());
+
+// TEMPLATE
+// =============================================================================
+function relativePath(p) {
+  return path.join(__dirname, p);
+}
+
+function read(filename) {
+  return fs.readFileSync(path.join(relativePath('../src'), filename), 'utf8');
+}
+
+var appTemplate = handlebars.compile(read('template.html'));
+
+// =============================================================================
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -17,42 +41,28 @@ var router = express.Router();              // get an instance of the express Ro
 
 // test route to make sure everything is working (accessed at GET http://localhost:4000/test)
 router.get('/', function(req, res) {
-  console.log('hello');
   res.json({ message: 'hooray! welcome to our api!' });   
+});
+
+router.get('/posts', function(req, res) {
+  res.json(JSON.parse(fs.readFileSync(path.join(__dirname, '../_content/posts.json'), 'utf8')));
 });
 
 // =============================================================================
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-// app.use('/api', router);
+app.use('/api', router);
 
+app.get('/api/*', function(req, res) {
+  res.send('bad API request');
+});
 
-// app.get('/api/*', function(req, res) {
-//   res.send('bad API request');
-// });
-
-
-var fs                  = require('fs');
-var path                = require('path');
 const React             = require('react');
 const Router            = require('react-router');
 
-// var obj = JSON.parse(fs.readFileSync(path.join(__dirname, '../_content/posts.json'), 'utf8'));
-// console.log(obj);
-// app.use('/about', function(req, res) {
-//     console.log('hello', req.path);
-// });
 app.use('*', function(req, res) {
   Router.run(routes, req.originalUrl, function(Handler, state) {
-    console.log('===================================================');
-
-    seq(
-    state.routes,
-    map(function(x) { console.log(x.name); })
-    )
-    
-    console.log('===================================================');
     let data = {};
     let requests = seq(state.routes, compose(
         filter(x => x.handler.fetchData),
@@ -71,31 +81,17 @@ app.use('*', function(req, res) {
     });
 
     var html = React.renderToString(<Handler data={data} path={req.path} />);
-    res.send(html);
+    var result = appTemplate({
+      content: html,
+      // payload: encodeTextContent(JSON.stringify(payload)),
+      // bodyClass: bodyClass,
+      title: 'iojs vietnam community',
+      // webpackURL: nconf.get('webpackURL')
+    });
+    res.send(result);
   });
 });
-
 
 var port = process.env.PORT || 4000;
 app.listen(port);
 console.log("Listening on port " + port);
-
-
-console.log('===================================================');
-
-let requests = seq(
-    [1, 2, 3],
-    // map(function(x) { return x; }),
-    map(x => x + 1)
-);
-console.log(requests, 'requests');
-
-var transform = compose(
-  map(x => x * 3),
-  filter(x => x % 2 === 0),
-  take(1)
-);
-
-console.log(seq([1, 2, 3, 4, 5], transform), 'seq([1, 2, 3, 4, 5], transform)');
-
-console.log('===================================================');

@@ -16,6 +16,7 @@
     "body-parser": "^1.13.2",
     "cors": "^2.7.1",
     "express": "^4.13.1",
+    "handlebars": "^3.0.3",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "transducers.js": "^0.3.2"
