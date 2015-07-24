@@ -87,6 +87,7 @@ app.use('*', function(req, res) {
       // bodyClass: bodyClass,
       title: 'iojs vietnam community',
       // webpackURL: nconf.get('webpackURL')
+      webpackURL: 'http://localhost:8080'
     });
     res.send(result);
   });

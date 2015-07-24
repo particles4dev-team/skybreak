@@ -1,0 +1,20 @@
+@import 'sidebar';
+@import 'subNav';
+@import 'post';
+@import 'category';
+@import 'meta';
+@import 'footer';
+@import 'content';
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+img {
+  max-width: 100%;
+}
+@media (min-width: 992px) {
+  body,html {
+    height:100%
+  }
+}

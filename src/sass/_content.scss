@@ -1,0 +1,39 @@
+.left-container {
+  margin-left: 15px;
+  padding-left: 0;
+}
+
+.main-content {
+  padding: 30px;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    padding: 60px 120px;
+  }
+}
+
+@media (min-width: 992px) {
+  .main-content {
+    padding: 50px;
+  }
+}
+
+.no-gutter {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.favorites, .post-favorite, .post-preview, .sidebar {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.link-spacer {
+  margin: 0 5px 4px;
+  display: inline-block;
+  height: 2px;
+  width: 2px;
+  background-color: #b6b6b6;
+  border-radius: 100%;
+}

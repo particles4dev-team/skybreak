@@ -4,7 +4,7 @@ let Sidebar = React.createClass({
   render: function () {
     return (
       <div>
-        <section className="sidebar col-md-5 col-sm-12" style={{"backgroundImage": "url(http://adventurethemes.com/demo/writer/html/v2/img/default-sidebar.jpg"}}>
+        <section className="sidebar col-md-5 col-sm-12" style={{"backgroundImage": "url(http://www.ilikewallpaper.net/iphone-5-wallpapers/download/18379/Space-Dark-Universe-iphone-5-wallpaper-ilikewallpaper_com.jpg)"}}>
               <span className="menu-trigger animated fadeInDown">
                 <span className="bar"></span>
                 <span className="bar"></span>

@@ -5,6 +5,7 @@ import NotFound from "./NotFound";
 import Home from "./HomePage";
 import About from "./AboutPage";
 import Categories from "./CategoriesPage";
+import Category from "./CategoryPage";
 import Post from "./PostPage";
 import Layout from "./Layout";
 
@@ -21,6 +22,7 @@ let routes = (
     <Route name="about" path="/about" handler={About}/>
     <Route name="categories" path="/categories" handler={Categories}/>
     <Route name="post" path="/post/:id" handler={Post}/>
+    <Route name="category" path="/category/:id" handler={Category}/>
 
     <NotFoundRoute name="not-found" handler={NotFound}/>
   </Route>

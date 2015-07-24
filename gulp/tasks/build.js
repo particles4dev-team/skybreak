@@ -6,7 +6,6 @@ var path                = require('path');
 var webpack             = require('webpack');
 
 var isProduction        = require('../util/environment');
-var config              = require('../webpack.config');
 
 var outputOptions = {
   cached: false,

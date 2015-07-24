@@ -5,35 +5,15 @@ var fs                  = require('fs');
 var path                = require('path');
 var nodemon             = require('nodemon');
 var runSequence         = require('run-sequence');
-var config              = require('../webpack.config');
+var ExtractTextPlugin   = require('extract-text-webpack-plugin');
 
 gulp.task('develop', function (done) {
-
   runSequence(
     'webpack:backend-watch',
     'server',
     'yaml'
   );
-
-  new WebpackDevServer(webpack(config), {
-    publicPath: config.output.publicPath,
-    hot: true,
-    historyApiFallback: true
-  }).listen(3000, 'localhost', function (err, result) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    done();
-    console.log('Listening at localhost:3000');
-  });
 });
-
-
-
-
-
-
 
 
 

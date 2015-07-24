@@ -13,9 +13,9 @@ let Layout = React.createClass({
           <div className="row">
             <div id="menu-target"></div>
             <Sidebar>
-              <h1>Writer</h1>
-              <p>A minimal blogging theme to put your content on show. <a href="/">Look at the features.</a> </p>
-              <p>Content is king</p>
+              <h1><a href="/">iojs vietnam</a></h1>
+              <p>Bringing ES6 to the Node Community in Vietnam.</p>
+              <p>News, weeekly update, tutorials ...</p>
             </Sidebar>
             <section className="col-md-7 col-sm-12 col-md-offset-5 main-content">
               <RouteHandler {...this.props} />

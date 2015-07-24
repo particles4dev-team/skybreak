@@ -10,10 +10,12 @@ let Post = React.createClass({
   },
   render: function () {
     return (
-      <div className="col-xs-12 single-content">
-          <p className="meta">
-            <a className="" href="category.html">James Reddy</a> in <a className="" href="category.html">Storytime</a> <i className="link-spacer"></i> <i className="fa fa-bookmark"></i> 23 minute read
-          </p>
+      <div>
+       <div className="sub-nav">
+          <a href="/" className="select-posts active">Posts</a>
+          <a href="/categories" className="select-categories">Categories</a>
+        </div>
+        <div className="col-xs-12 single-content">
           <h1>A Great Story Never Told</h1>
           <p className="subtitle">Like I said, never told...</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra ligula eget feugiat sollicitudin. Praesent accumsan, ante ut porttitor aliquet, odio felis mollis ante, et pretium arcu ipsum eget turpis. Quisque congue odio tristique, tincidunt arcu a, dignissim neque. Cras ligula erat, porta sed tristique at, sollicitudin sit amet ligula. Quisque eleifend elementum mauris, eu condimentum tortor ultrices a. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer hendrerit, arcu a aliquam malesuada, sapien quam tempor neque, nec aliquam odio mi vel diam. Pellentesque egestas pharetra justo, id malesuada erat tincidunt ac. Ut mauris mauris, ultricies ut pharetra sit amet, suscipit sed nibh. Suspendisse vestibulum sem sed rhoncus pharetra. Nunc commodo, neque eget gravida mattis, augue est sollicitudin nunc, elementum aliquet tortor mi ac velit. Ut nec pharetra est. Vestibulum at mauris sapien. Duis sed turpis at lectus egestas rhoncus.</p>
@@ -30,6 +32,37 @@ let Post = React.createClass({
             <li>Maecenas pulvinar, turpis quis luctus tincidunt.</li>
           </ul>
           <p>Lorem massa hendrerit mi, ut dapibus sem enim at nisl. Nullam ut mollis arcu. Quisque lobortis nibh diam, non molestie dui pretium et. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quos, mollitia dolor nam soluta consequuntur excepturi eveniet quod autem quasi. Labore dolorum vel voluptates molestias qui perspiciatis eveniet non, culpa!</p>
+          <p className="meta">
+            <a className="" href="category.html">James Reddy</a> in <a className="" href="category.html">Storytime</a> <i className="link-spacer"></i> <i className="fa fa-bookmark"></i> 23 minute read
+          </p>
+          <h2 className="favorites">Most recommended posts</h2>
+          <div className="posts-block animated fadeIn ">
+            <article className="post author-page">
+              <div className="post-preview col-xs-10  no-gutter">
+                <h2><a href="post.html">8 Reasons to quit your day job</a></h2>
+                <p>It was a cold December morning, as I sat out on my porch I decided today was the day. </p>
+              </div>
+              <div className="col-sm-3 col-md-1 col-md-offset-1 hidden-sm hidden-xs no-gutter">
+                <p className="meta">
+                  <span className="time"><i className="fa fa-bookmark"></i> 12</span>
+                  <span className="min">minutes</span>
+                </p>
+              </div>
+            </article>
+            <article className="post author-page">
+              <div className="post-preview col-xs-10  no-gutter">
+                <h2><a href="post.html">The Best thing about cold showers</a></h2>
+                <p>Would you give up your warm shower for an icy one? </p>
+              </div>
+              <div className="col-sm-3 col-md-1 col-md-offset-1 hidden-sm hidden-xs no-gutter">
+                <p className="meta author-page">
+                  <span className="time"><i className="fa fa-bookmark"></i> 19</span>
+                  <span className="min">minutes</span>
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
     );
   }

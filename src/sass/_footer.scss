@@ -1,0 +1,17 @@
+.split-footer {
+  padding: 10px 0;
+  font-size: 11px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  font-family: "Source Sans Pro",Helvetica,Arial,sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  a {
+    color: #999;
+    border-bottom: none;
+    &:active, &:hover {
+      color: #333;
+      border-bottom: none;
+    }
+  }
+}
