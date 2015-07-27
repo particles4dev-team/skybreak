@@ -4,9 +4,27 @@
 
 import React from 'react';
 import Router from 'react-router';
+import nconf from 'nconf';
 import routes from './components/Routes';
 
 require('./sass/main.scss');
+
+function decodeTextContent(str) {
+  return str.replace(/(&lt;|&gt;|&amp;|&quot;)/g, function(str) {
+    return {
+      '&lt;': '<',
+      '&gt;': '>',
+      '&amp;': '&',
+      '&quot;': '"'
+    }[str];
+  })
+}
+
+let config = JSON.parse(
+  decodeTextContent(document.getElementById('config').textContent)
+);
+
+nconf.defaults(config);
 
 let payload = JSON.parse(
   document.getElementById('payload').textContent

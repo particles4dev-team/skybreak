@@ -16,7 +16,7 @@ module.exports = {
     // http://webpack.github.io/docs/configuration.html#entry
     // The entry point for the bundle.
     entry: [
-        './src/client.js'
+        '../src/client.js'
     ],
     // http://webpack.github.io/docs/configuration.html#output
     output: {
@@ -73,9 +73,13 @@ module.exports = {
         // A array of automatically applied loaders.
         loaders: [
             {
+                test: /\.json$/,
+                loader: "json"
+            },
+            {
                 test: /\.js?$/,
                 loaders: ['babel'],
-                include: path.join(__dirname, 'src')
+                include: path.join(__dirname, '../src')
             },
             {
                 test: /\.scss$/,

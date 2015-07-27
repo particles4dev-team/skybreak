@@ -33,9 +33,13 @@ config.plugins = [
 config.module = {
     loaders: [
         {
+            test: /\.json$/,
+            loader: "json"
+        },
+        {
             test: /\.js?$/,
             loaders: ['babel'],
-            include: path.join(__dirname, 'src')
+            include: path.join(__dirname, '../src')
         },
         {
             test: /\.scss$/,

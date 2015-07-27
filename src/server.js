@@ -2,19 +2,27 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import routes from './components/Routes';
-
-const t = require('transducers.js');
-const { range, seq, compose, map, filter, take } = t;
-
+import nconf from 'nconf';
 import fs from 'fs';
 import path from 'path';
 import handlebars  from 'handlebars';
+import React from 'react';
+import Router from 'react-router';
+
+const t = require('transducers.js');
+const { range, seq, compose, map, filter, take } = t;
 
 /**
  * Define isomorphic constants.
  */
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
+
+nconf.argv().env().file({
+  file: relativePath('../config/config.json')
+}).defaults({
+
+});
 
 let app = express();
 app.use(bodyParser.json());
@@ -28,13 +36,14 @@ function relativePath(p) {
 }
 
 function read(filename) {
-  return fs.readFileSync(path.join(relativePath('../src'), filename), 'utf8');
+  return fs.readFileSync(path.join(relativePath('../'), filename), 'utf8');
 }
 
-var appTemplate = handlebars.compile(read('template.html'));
+var appTemplate = handlebars.compile(read( nconf.get("template:file") ));
 
 
 // hand STATIC REQUEST
+// http://expressjs.com/starter/static-files.html
 app.use(express.static(path.join(relativePath('../build/static'))));
 
 // =============================================================================
@@ -43,7 +52,7 @@ app.use(express.static(path.join(relativePath('../build/static'))));
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
 
-// test route to make sure everything is working (accessed at GET http://localhost:4000/test)
+// test route to make sure everything is working (accessed at GET http://localhost:4000/api)
 router.get('/', function(req, res) {
   res.json({ message: 'hooray! welcome to our api!' });   
 });
@@ -88,9 +97,6 @@ app.get('/api/*', function(req, res) {
   res.send('bad API request');
 });
 
-const React             = require('react');
-const Router            = require('react-router');
-
 app.use('*', function(req, res) {
   Router.run(routes, req.originalUrl, function(Handler, state) {
     let data = [];
@@ -126,9 +132,9 @@ app.use('*', function(req, res) {
           content: html,
           payload: JSON.stringify(data),
           // bodyClass: bodyClass,
-          title: 'iojs vietnam community',
-          // webpackURL: nconf.get('webpackURL')
-          webpackURL: 'http://localhost:8080'
+          configClient: JSON.stringify(nconf.get('public')),
+          title: nconf.get('public:general:title'),
+          webpackURL: nconf.get('webpackURL')
         });
         res.send(result);
 
@@ -139,6 +145,6 @@ app.use('*', function(req, res) {
   });
 });
 
-var port = process.env.PORT || 4000;
+var port = nconf.get('http:port');
 app.listen(port);
 console.log("Listening on port " + port);

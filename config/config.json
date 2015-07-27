@@ -1,0 +1,15 @@
+{
+    "webpackURL": "http://localhost:8080",
+    "http": {
+        "port": 4000
+    },
+    "template": {
+        "file": "src/template.html"
+    },
+    "public": {
+        "general": {
+            "title": "iojs vietnam community",
+            "slogan": "Bringing ES6 to the Node Community in Vietnam."
+        }
+    }
+}

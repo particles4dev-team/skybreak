@@ -2,11 +2,14 @@ import React from 'react';
 import Router from 'react-router';
 import {Link} from 'react-router';
 import Sidebar from './Sidebar';
+import nconf from 'nconf';
 
 const RouteHandler = Router.RouteHandler;
 
 let Layout = React.createClass({
   render: function () {
+    var title = nconf.get("general:title");
+    var slogan= nconf.get("general:slogan");
     return (
       <div>
         <main className="container left-container">
@@ -15,10 +18,10 @@ let Layout = React.createClass({
             <Sidebar>
               <h1>
                 <Link to="home">
-                  iojs vietnam
+                  {title}
                 </Link>
               </h1>
-              <p>Bringing ES6 to the Node Community in Vietnam.</p>
+              <p>{slogan}</p>
               <p>News, weeekly update, tutorials ...</p>
             </Sidebar>
             <section className="col-md-7 col-sm-12 col-md-offset-5 main-content">
@@ -30,7 +33,6 @@ let Layout = React.createClass({
                   About
                 </Link>
                 <i className="link-spacer"></i>
-                <a href="post.html">Writer 2015</a>
               </footer>
             </section>
             {/* main content */}
