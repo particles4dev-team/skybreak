@@ -35,7 +35,9 @@ let Sidebar = React.createClass({
                 </div>
                 <div className="secondary-info">
                   <p>
-                    <a className="btn btn-primary" href="#"><i className="fa fa-user-plus"></i>Join Our Newsletter</a>
+                    <a className="btn btn-primary" href="#">
+                      <i className="fa fa-user-plus"></i>Join Our Newsletter
+                    </a>
                   </p>
                 </div>
               </div>

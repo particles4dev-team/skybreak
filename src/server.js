@@ -33,6 +33,10 @@ function read(filename) {
 
 var appTemplate = handlebars.compile(read('template.html'));
 
+
+// hand STATIC REQUEST
+app.use(express.static(path.join(relativePath('../build/static'))));
+
 // =============================================================================
 
 // ROUTES FOR OUR API
@@ -46,6 +50,32 @@ router.get('/', function(req, res) {
 
 router.get('/posts', function(req, res) {
   res.json(JSON.parse(fs.readFileSync(path.join(__dirname, '../_content/posts.json'), 'utf8')));
+});
+
+router.get('/post/:id', function(req, res) {
+  var posts = JSON.parse(fs.readFileSync(path.join(__dirname, '../_content/posts.json'), 'utf8')).data; 
+  for(var i = 0; i < posts.length; i ++) {
+    if(posts[i]._id == req.params.id){
+      res.json(posts[i]);
+      break;
+    }
+  }
+});
+
+router.get('/category/:id', function(req, res) {
+  res.json({data: [
+    {
+      "_id": "134",
+      "title": "A great story never told",
+      "description": "It was a cold December morning, as I sat out on my porch I decided today was the day.",
+      "category": "Storytime",
+      "tags": ["Storytime"],
+      "author": {
+        "name": "Le Hoang"
+      }
+    }
+  ]
+  });
 });
 
 // =============================================================================
@@ -63,33 +93,49 @@ const Router            = require('react-router');
 
 app.use('*', function(req, res) {
   Router.run(routes, req.originalUrl, function(Handler, state) {
-    let data = {};
+    let data = [];
+
+    var { params, query } = state;
+
     let requests = seq(state.routes, compose(
         filter(x => x.handler.fetchData),
         map(x => {
           let handler = x.handler;
           return {
             name: x.name,
-            request: handler.fetchData
+            request: handler.fetchData,
+            params: params
           };
         }),
         // filter(x => !!x.request)
     ));
 
     requests.map(function (a) {
-        data[a.name] = a.request();
+      data.push(a.request(a.name, params, query));
     });
 
-    var html = React.renderToString(<Handler data={data} path={req.path} />);
-    var result = appTemplate({
-      content: html,
-      // payload: encodeTextContent(JSON.stringify(payload)),
-      // bodyClass: bodyClass,
-      title: 'iojs vietnam community',
-      // webpackURL: nconf.get('webpackURL')
-      webpackURL: 'http://localhost:8080'
+    Promise.all(data)
+    .then(values => {
+      let data = {};
+      values.map((d) => {
+        data[d.routerName] = d.data;
+        
+
+        var html = React.renderToString(<Handler data={data} />);
+        var result = appTemplate({
+          content: html,
+          payload: JSON.stringify(data),
+          // bodyClass: bodyClass,
+          title: 'iojs vietnam community',
+          // webpackURL: nconf.get('webpackURL')
+          webpackURL: 'http://localhost:8080'
+        });
+        res.send(result);
+
+
+      });
     });
-    res.send(result);
+
   });
 });
 

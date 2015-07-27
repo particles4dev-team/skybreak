@@ -4,9 +4,6 @@ const NotFound = React.createClass({
   render: function() {
     return (
       <div className="col-sm-9 col-sm-offset-3 header">
-        <div className="page-header">
-          <h1>iojs vietnam community </h1>
-        </div>
         <div className="wrapper-hero">
           <img title="404" className="hero" src="/img/notfound-160x160.svg"/>
           <h1 className="title-page">Not Found</h1>

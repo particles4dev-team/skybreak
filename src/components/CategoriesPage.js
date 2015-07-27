@@ -14,8 +14,12 @@ let CategoriesPage = React.createClass({
     return (
       <div>
         <div className="sub-nav">
-          <a href="/" className="select-posts">Posts</a>
-          <a href="/categories" className="select-categories active">Categories</a>
+          <Link to="home" className="select-posts">
+            Posts
+          </Link>
+          <Link to="categories" className="select-categories active">
+            Categories
+          </Link>
         </div>
         <div className="home-page-categories animated fadeIn ">
           <div className="category row">

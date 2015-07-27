@@ -13,7 +13,11 @@ let Layout = React.createClass({
           <div className="row">
             <div id="menu-target"></div>
             <Sidebar>
-              <h1><a href="/">iojs vietnam</a></h1>
+              <h1>
+                <Link to="home">
+                  iojs vietnam
+                </Link>
+              </h1>
               <p>Bringing ES6 to the Node Community in Vietnam.</p>
               <p>News, weeekly update, tutorials ...</p>
             </Sidebar>
