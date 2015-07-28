@@ -1,16 +1,16 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import routes from './components/Routes';
-import nconf from 'nconf';
-import fs from 'fs';
-import path from 'path';
-import handlebars  from 'handlebars';
-import React from 'react';
-import Router from 'react-router';
-
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const nconf = require('nconf');
+const fs = require('fs');
+const path = require('path');
+const handlebars = require('handlebars');
+const React = require('react');
+const Router = require('react-router');
 const t = require('transducers.js');
 const { range, seq, compose, map, filter, take } = t;
+const routes = require('./components/Routes');
+require('../posts/2015-07-27-weekly-update.md');
 
 /**
  * Define isomorphic constants.
@@ -23,6 +23,8 @@ nconf.argv().env().file({
 }).defaults({
 
 });
+
+const PROD = process.env.NODE_ENV === 'production';
 
 let app = express();
 app.use(bodyParser.json());
@@ -44,8 +46,7 @@ var appTemplate = handlebars.compile(read( nconf.get("template:file") ));
 
 // hand STATIC REQUEST
 // http://expressjs.com/starter/static-files.html
-app.use(express.static(path.join(relativePath('../build/static'))));
-
+app.use('/public', express.static(path.join(relativePath('../build/public'))));
 // =============================================================================
 
 // ROUTES FOR OUR API
@@ -58,11 +59,11 @@ router.get('/', function(req, res) {
 });
 
 router.get('/posts', function(req, res) {
-  res.json(JSON.parse(fs.readFileSync(path.join(__dirname, '../_content/posts.json'), 'utf8')));
+  res.json(JSON.parse(fs.readFileSync(path.join(__dirname, './_content/posts.json'), 'utf8')));
 });
 
 router.get('/post/:id', function(req, res) {
-  var posts = JSON.parse(fs.readFileSync(path.join(__dirname, '../_content/posts.json'), 'utf8')).data; 
+  var posts = JSON.parse(fs.readFileSync(path.join(__dirname, './_content/posts.json'), 'utf8')).data; 
   for(var i = 0; i < posts.length; i ++) {
     if(posts[i]._id == req.params.id){
       res.json(posts[i]);
@@ -122,10 +123,22 @@ app.use('*', function(req, res) {
 
     Promise.all(data)
     .then(values => {
+      if(!values || values.length == 0){
+        var html = React.renderToString(<Handler data={{}} />);
+        var result = appTemplate({
+          content: html,
+          payload: JSON.stringify(data),
+          // bodyClass: bodyClass,
+          configClient: JSON.stringify(nconf.get('public')),
+          title: nconf.get('public:general:title'),
+          webpackURL: PROD ? nconf.get('url') : nconf.get('webpackURL') + '/dist/'
+        });
+        res.send(result);
+        return;
+      }
       let data = {};
       values.map((d) => {
         data[d.routerName] = d.data;
-        
 
         var html = React.renderToString(<Handler data={data} />);
         var result = appTemplate({
@@ -134,10 +147,9 @@ app.use('*', function(req, res) {
           // bodyClass: bodyClass,
           configClient: JSON.stringify(nconf.get('public')),
           title: nconf.get('public:general:title'),
-          webpackURL: nconf.get('webpackURL')
+          webpackURL: PROD ? nconf.get('url') : nconf.get('webpackURL') + '/dist/'
         });
         res.send(result);
-
 
       });
     });

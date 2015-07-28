@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    
     "start": "gulp develop",
     "build": "NODE_ENV=production gulp build",
-    "build2": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client.js",
+    "build-client": "gulp build:client",
     "watch-client": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client-watch.js && node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config config/webpack.client-watch.js",
+
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "echo \"develop\" && exit 1",
+    "build": "echo \"build\" && exit 1",
     "lint": "eslint src"
   },
   "author": "",
@@ -32,8 +36,8 @@
     "del": "^1.2.0",
     "eslint-plugin-react": "^2.3.0",
     "extract-text-webpack-plugin": "^0.8.2",
+    "file-loader": "^0.8.4",
     "gulp": "^3.9.0",
-    "gulp-front-matter": "^1.2.3",
     "gulp-notify": "^2.2.0",
     "json-loader": "^0.5.2",
     "node-sass": "^3.2.0",

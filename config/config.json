@@ -1,4 +1,5 @@
 {
+    "url": "http://localhost:4000",
     "webpackURL": "http://localhost:8080",
     "http": {
         "port": 4000
@@ -9,7 +10,7 @@
     "public": {
         "general": {
             "title": "iojs vietnam community",
-            "slogan": "Bringing ES6 to the Node Community in Vietnam."
+            "description": "Bringing ES6 to the Node Community in Vietnam."
         }
     }
 }

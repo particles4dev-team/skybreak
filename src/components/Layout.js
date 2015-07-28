@@ -9,7 +9,7 @@ const RouteHandler = Router.RouteHandler;
 let Layout = React.createClass({
   render: function () {
     var title = nconf.get("general:title");
-    var slogan= nconf.get("general:slogan");
+    var description = nconf.get("general:description");
     return (
       <div>
         <main className="container left-container">
@@ -21,7 +21,7 @@ let Layout = React.createClass({
                   {title}
                 </Link>
               </h1>
-              <p>{slogan}</p>
+              <p>{description}</p>
               <p>News, weeekly update, tutorials ...</p>
             </Sidebar>
             <section className="col-md-7 col-sm-12 col-md-offset-5 main-content">

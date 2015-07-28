@@ -5,9 +5,6 @@ const Navigation = Router.Navigation;
 let About = React.createClass({
   mixins: [ Navigation ],
   statics: {
-    fetchData: function () {
-      return null;
-    },
   },
   handleClick: function(event) {
     this.goBack();

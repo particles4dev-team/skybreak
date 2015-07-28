@@ -38,7 +38,7 @@ config.module = {
         },
         {
             test: /\.js?$/,
-            loaders: ['babel'],
+            loaders: ['react-hot', 'babel'],
             include: path.join(__dirname, '../src')
         },
         {
@@ -50,7 +50,7 @@ config.module = {
 
 config.devServer = {
     // --content-base <file/directory/url>: base path for the content;
-    contentBase: "./build",
+    contentBase: "../build",
     // --hot: adds the HotModuleReplacementPlugin and switch the server to hot mode. Note: make sure you don’t add HotModuleReplacementPlugin twice;
     hot:         true,
     // --inline: embed the webpack-dev-server runtime into the bundle;

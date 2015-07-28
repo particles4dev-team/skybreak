@@ -36,7 +36,6 @@ function getData (routerState, cb, initialData) {
     return;
   }
   var { params, query } = routerState;
-  console.log(routerState, params, query);
 
   var list = routerState.routes.filter((route) => {
     return route.handler.fetchData;
@@ -44,13 +43,18 @@ function getData (routerState, cb, initialData) {
     promises.push(route.handler.fetchData(route.name, params, query));
     return promises;
   }, []);
+
   Promise.all(list)
   .then(values => {
+    if(!values || values.length == 0){
+      return cb({});
+    }
+
     let data = {};
     values.map((d) => {
       data[d.routerName] = d.data;
-      cb(data);
     });
+    return cb(data);
   });
 }
 

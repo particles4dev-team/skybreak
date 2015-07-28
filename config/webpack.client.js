@@ -21,7 +21,7 @@ module.exports = {
     // http://webpack.github.io/docs/configuration.html#output
     output: {
         // The output directory as absolute path (required).
-        path: path.join(__dirname, 'build'),
+        path: path.join(__dirname, '../build/public/'),
         // The filename of the entry chunk as relative path inside the output.path directory.
         filename: 'client.js',
         // The filename of non-entry chunks as relative path inside the output.path directory.
@@ -62,7 +62,7 @@ module.exports = {
         // Minimize all JavaScript output of chunks. Loaders are switched into minimizing mode. You can pass an object containing UglifyJs options.
         new webpack.optimize.UglifyJsPlugin(),
 
-        new ExtractTextPlugin('style/main.css', {
+        new ExtractTextPlugin('public/style/main.css', {
             allChunks: true
         })
     ],

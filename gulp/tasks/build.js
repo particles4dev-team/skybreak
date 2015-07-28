@@ -23,7 +23,7 @@ var z = {};
 if(isProduction()) {
   z = {
     // start point
-    entry: [path.join(__rootPath, '/src/index.js')],
+    entry: [path.join(__rootPath, '/src/server.js')],
     // http://webpack.github.io/docs/configuration.html#target
     // "web" Compile for usage in a browser-like environment (default)
     // "webworker" Compile as WebWorker
@@ -46,7 +46,7 @@ if(isProduction()) {
       //   loaders: A array of loaders as string
       loaders: [
         {
-          test: /\.jsx?$/,
+          test: /\.js?$/,
           loaders: ['babel'],
           include: path.join(__rootPath, 'src')
         }
