@@ -4,9 +4,6 @@ var webpack             = require("webpack");
 var path                = require("path");
 var config              = require("./webpack.client.js");
 
-// https://github.com/webpack/extract-text-webpack-plugin
-var ExtractTextPlugin   = require('extract-text-webpack-plugin');
-
 config.cache = true;
 config.debug = true;
 config.devtool = "eval";
@@ -23,11 +20,7 @@ config.output.hotUpdateChunkFilename = "update/[hash]/[id].update.js";
 config.plugins = [
     new webpack.DefinePlugin({__CLIENT__: true, __SERVER__: false}),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-
-    new ExtractTextPlugin('style/main.css', {
-        allChunks: true
-    })
+    new webpack.NoErrorsPlugin()
 ];
 
 config.module = {
@@ -43,7 +36,7 @@ config.module = {
         },
         {
             test: /\.scss$/,
-            loader: ExtractTextPlugin.extract('css!sass?sourceMap')
+            loaders: ['style', 'css', 'sass']
         }
     ]
 };
