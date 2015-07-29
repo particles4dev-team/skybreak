@@ -6,10 +6,6 @@ tags: [weekly, publish]
 description: Thông tin cập nhật tuần 2015-07-17
 ---
 
-{{ title }}
-
-{{ description }}
-
 ### Các tin tức mới về io.js và Node.js - 10/17
 
 Phát hành io.js 2.4.0, Apigee gia nhập vào foundation của chúng ta và bắt đầu Intl WG.

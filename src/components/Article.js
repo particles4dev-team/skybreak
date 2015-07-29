@@ -12,9 +12,6 @@ let Article = React.createClass({
             </Link>
           </h2>
           <p>{this.props.description}</p>
-          <p className="meta">
-            <a href="author.html">{this.props.author.name}</a> in <a href="category.html">{this.props.category}</a> <i className="link-spacer"></i> <i className="fa fa-bookmark"></i> 23 minute read
-          </p>
         </div>
       </article>
     );

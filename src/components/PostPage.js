@@ -30,7 +30,7 @@ let Post = React.createClass({
   },
   render: function () {
     var post = this.props.data['post'];
-    post.content = decodeTextContent(post.content);
+    post.content = decodeTextContent(post.__content);
     return (
       <div>
         <div className="sub-nav">
