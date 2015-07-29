@@ -29,7 +29,7 @@ let CategoryPage = React.createClass({
                 );
             });
         return (
-        <div>
+        <div style={this.props.style}>
             <div className="sub-nav">
                 <Link to="home" className="select-posts">
                     Posts

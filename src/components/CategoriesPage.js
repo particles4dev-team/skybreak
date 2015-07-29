@@ -36,6 +36,7 @@ let CategoriesPage = React.createClass({
         },
     },
     render: function () {
+        count = 0;
         var tags = this.props.data['categories'];
         var rows = [];
         for (var prop in tags.data) {
@@ -44,7 +45,7 @@ let CategoriesPage = React.createClass({
             } 
         }
         return (
-        <div>
+        <div style={this.props.style}>
             <div className="sub-nav">
                 <Link to="home" className="select-posts">
                     Posts
