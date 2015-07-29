@@ -131,7 +131,7 @@ app.use('*', function(req, res) {
           // bodyClass: bodyClass,
           configClient: JSON.stringify(nconf.get('public')),
           title: nconf.get('public:general:title'),
-          webpackURL: PROD ? nconf.get('url') : nconf.get('webpackURL') + '/dist/'
+          webpackURL: PROD ? nconf.get('url') + '/public/' : nconf.get('webpackURL') + '/dist/'
         });
         res.send(result);
         return;
@@ -147,7 +147,7 @@ app.use('*', function(req, res) {
           // bodyClass: bodyClass,
           configClient: JSON.stringify(nconf.get('public')),
           title: nconf.get('public:general:title'),
-          webpackURL: PROD ? nconf.get('url') : nconf.get('webpackURL') + '/dist/'
+          webpackURL: PROD ? nconf.get('url') + '/public/' : nconf.get('webpackURL') + '/dist/'
         });
         res.send(result);
 

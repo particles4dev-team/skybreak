@@ -5,15 +5,13 @@
   "main": "index.js",
   "scripts": {
     
-    "start": "gulp develop",
-    "build": "NODE_ENV=production gulp build",
-    "build-client": "gulp build:client",
-    "watch-client": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client-watch.js && node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config config/webpack.client-watch.js",
+    "start": "npm run develop",
+    "develop": "gulp develop",
 
     "test": "echo \"Error: no test specified\" && exit 1",
-    "develop": "echo \"develop\" && exit 1",
-    "build": "echo \"build\" && exit 1",
-    "lint": "eslint src"
+    "build": "gulp build:server && gulp build:client",
+    "lint": "eslint src",
+    "start-server": "./bin/run"
   },
   "author": "",
   "license": "MIT",
