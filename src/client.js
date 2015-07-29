@@ -10,57 +10,53 @@ import routes from './components/Routes';
 require('./sass/main.scss');
 
 function decodeTextContent(str) {
-  return str.replace(/(&lt;|&gt;|&amp;|&quot;)/g, function(str) {
-    return {
-      '&lt;': '<',
-      '&gt;': '>',
-      '&amp;': '&',
-      '&quot;': '"'
-    }[str];
-  })
+    return str.replace(/(&lt;|&gt;|&amp;|&quot;)/g, function(str) {
+        return {
+            '&lt;': '<',
+            '&gt;': '>',
+            '&amp;': '&',
+            '&quot;': '"'
+        }[str];
+    });
 }
 
 let config = JSON.parse(
-  decodeTextContent(document.getElementById('config').textContent)
+    decodeTextContent(document.getElementById('config').textContent)
 );
 
 nconf.defaults(config);
 
 let payload = JSON.parse(
-  document.getElementById('payload').textContent
+    document.getElementById('payload').textContent
 );
 
 function getData (routerState, cb, initialData) {
-  if(initialData) {
-    cb(initialData);
-    return;
-  }
-  var { params, query } = routerState;
-
-  var list = routerState.routes.filter((route) => {
-    return route.handler.fetchData;
-  }).reduce((promises, route) => {
-    promises.push(route.handler.fetchData(route.name, params, query));
-    return promises;
-  }, []);
-
-  Promise.all(list)
-  .then(values => {
-    if(!values || values.length == 0){
-      return cb({});
+    if(initialData) {
+        cb(initialData);
+        return;
     }
+    var { params, query } = routerState;
 
-    let data = {};
-    values.map((d) => {
-      data[d.routerName] = d.data;
+    var list = routerState.routes.filter((route) => {
+        return route.handler.fetchData;
+    }).reduce((promises, route) => {
+    promises.push(route.handler.fetchData(route.name, params, query));
+        return promises;
+    }, []);
+
+    Promise.all(list)
+    .then(values => {
+        let data = {};    
+        values.map((d) => {
+            data[d.routerName] = d.data;
+        });
+        return cb(data);
     });
-    return cb(data);
-  });
 }
 
 Router.run(routes, Router.HistoryLocation, (Root, state) => {
-  getData(state, (d) => {
-    React.render(<Root data={d}/>, document.getElementById('mount'));
-  }, payload);
-  payload = null;
+    getData(state, (d) => {
+        React.render(<Root data={d}/>, document.getElementById('mount'));
+    }, payload);
+    payload = null;
 });

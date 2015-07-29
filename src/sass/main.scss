@@ -6,15 +6,19 @@
 @import 'footer';
 @import 'content';
 
+html>body {
+    font-family: 'Roboto','Helvetica','Arial',sans-serif!important;
+    background-color: #FAFAFA;
+}
 body {
-  overflow-x: hidden;
-  width: 100%;
+ 	overflow-x: hidden;
+  	width: 100%;
 }
 img {
-  max-width: 100%;
+  	max-width: 100%;
 }
 @media (min-width: 992px) {
-  body,html {
-    height:100%
-  }
+  	body,html {
+    	height:100%
+  	}
 }

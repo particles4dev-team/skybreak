@@ -15,9 +15,9 @@ const PROD = process.env.NODE_ENV === 'production';
 
 // convert .md to .json
 require.context(
-  "../posts", // context folder
-  true, // include subdirectories
-  /\.md$/ // RegExp
+    "../posts", // context folder
+    true, // include subdirectories
+    /\.md$/ // RegExp
 );
 
 /**
@@ -27,7 +27,7 @@ global.__CLIENT__ = false;
 global.__SERVER__ = true;
 
 nconf.argv().env().file({
-  file: relativePath('../config/config.json')
+    file: relativePath('../config/config.json')
 }).defaults({
 
 });
@@ -40,15 +40,14 @@ app.use(cors());
 // TEMPLATE
 // =============================================================================
 function relativePath(p) {
-  return path.join(__dirname, p);
+    return path.join(__dirname, p);
 }
 
 function read(filename) {
-  return fs.readFileSync(path.join(relativePath('../'), filename), 'utf8');
+    return fs.readFileSync(path.join(relativePath('../'), filename), 'utf8');
 }
 
 var appTemplate = handlebars.compile(read( nconf.get("template:file") ));
-
 
 // hand STATIC REQUEST
 // http://expressjs.com/starter/static-files.html
@@ -60,67 +59,55 @@ app.use('/public', express.static(path.join(relativePath('../build/public'))));
 app.use('/api', api);
 
 app.get('/api/*', function(req, res) {
-  res.send('bad API request');
+    res.send('bad API request');
 });
 
 app.use('*', function(req, res) {
-  Router.run(routes, req.originalUrl, function(Handler, state) {
-    let data = [];
+    Router.run(routes, req.originalUrl, function(Handler, state) {
+        let data = [];
 
-    var { params, query } = state;
+        var { params, query } = state;
 
-    let requests = seq(state.routes, compose(
-        filter(x => x.handler.fetchData),
-        map(x => {
-          let handler = x.handler;
-          return {
-            name: x.name,
-            request: handler.fetchData,
-            params: params
-          };
-        }),
-        // filter(x => !!x.request)
-    ));
+        let requests = seq(state.routes, compose(
+            filter(x => x.handler.fetchData),
+            map(x => {
+                let handler = x.handler;
+                return {
+                    name: x.name,
+                    request: handler.fetchData,
+                    params: params
+                };
+            }),
+            // filter(x => !!x.request)
+        ));
 
-    requests.map(function (a) {
-      data.push(a.request(a.name, params, query));
-    });
-
-    Promise.all(data)
-    .then(values => {
-      if(!values || values.length == 0){
-        var html = React.renderToString(<Handler data={{}} />);
-        var result = appTemplate({
-          content: html,
-          payload: JSON.stringify(data),
-          // bodyClass: bodyClass,
-          configClient: JSON.stringify(nconf.get('public')),
-          title: nconf.get('public:general:title'),
-          webpackURL: PROD ? nconf.get('url') + '/public/' : nconf.get('webpackURL') + '/dist/'
+        requests.map(function (a) {
+            data.push(a.request(a.name, params, query));
         });
-        res.send(result);
-        return;
-      }
-      let data = {};
-      values.map((d) => {
-        data[d.routerName] = d.data;
 
-        var html = React.renderToString(<Handler data={data} />);
-        var result = appTemplate({
-          content: html,
-          payload: JSON.stringify(data),
-          // bodyClass: bodyClass,
-          configClient: JSON.stringify(nconf.get('public')),
-          title: nconf.get('public:general:title'),
-          webpackURL: PROD ? nconf.get('url') + '/public/' : nconf.get('webpackURL') + '/dist/'
+        Promise.all(data)
+        .then(values => {
+            let data = {};
+            values.map((d) => {
+                data[d.routerName] = d.data;
+            });
+            parseHTML(res, data, Handler);
         });
-        res.send(result);
-
-      });
     });
-
-  });
 });
+
+function parseHTML(res, data, Handler) {
+    var html = React.renderToString(<Handler data={data} />);
+    var result = appTemplate({
+        content: html,
+        payload: JSON.stringify(data),
+        // bodyClass: bodyClass,
+        configClient: JSON.stringify(nconf.get('public')),
+        title: nconf.get('public:general:title'),
+        webpackURL: PROD ? nconf.get('url') + '/public/' : nconf.get('webpackURL') + '/dist/'
+    });
+    res.send(result);
+}
 
 var port = nconf.get('http:port');
 app.listen(port);

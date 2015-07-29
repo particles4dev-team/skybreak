@@ -1,96 +1,69 @@
 import React from 'react';
 import Router from 'react-router';
 import {Link} from 'react-router';
+import axios from 'axios';
+
+var count = 0;
+let Category = React.createClass({
+    render: function () {
+        count++;
+        var pic = '/public/images/cover-' + count + '.jpg';
+        return (
+            <div className="category-preview col-xs-6 col-sm-4 ">
+                <h2>{this.props.title} ({this.props.data.posts.length})</h2>
+                <Link to="category" params={{id: this.props.title}}>
+                    <img src={pic} alt="category-image"/>
+                </Link>
+            </div>
+        );
+    }
+});
 
 let CategoriesPage = React.createClass({
-  statics: {
-    fetchData: function () {
-      return {
-        message: 'message'
-      };
+    statics: {
+        fetchData: function (routerName) {
+            console.log("__CLIENT__ = ", __CLIENT__, "__SERVER__ = ", __SERVER__);
+            return axios.get('http://localhost:4000/api/categories')
+            .then(function (response) {
+                return {
+                    data: response.data,
+                    routerName: routerName
+                };
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
     },
-  },
-  render: function () {
-    return (
-      <div>
-        <div className="sub-nav">
-          <Link to="home" className="select-posts">
-            Posts
-          </Link>
-          <Link to="categories" className="select-categories active">
-            Categories
-          </Link>
-        </div>
-        <div className="home-page-categories animated fadeIn ">
-          <div className="category row">
-            <section>
-
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Weekly Update</h2>
-                <Link to="category" params={{id: "123"}}>
-                  <img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-2.jpg" alt="category-image"/>
+    render: function () {
+        var tags = this.props.data['categories'];
+        var rows = [];
+        for (var prop in tags.data) {
+            if( tags.data.hasOwnProperty( prop ) ) {
+                rows.push(<Category title={prop} data={tags.data[prop]} />);
+            } 
+        }
+        return (
+        <div>
+            <div className="sub-nav">
+                <Link to="home" className="select-posts">
+                    Posts
                 </Link>
-              </div>
-              
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>ES2015</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-4.jpg" alt="category-image"/></a>
-              </div>
+                <Link to="categories" className="select-categories active">
+                    Categories
+                </Link>
+            </div>
+            <div className="home-page-categories animated fadeIn">
+                
+                <div className="category row">
+                <section>
 
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Tutorials</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-6.jpg" alt="category-image"/></a>
-              </div>
+                {rows}
 
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Open Roads</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-9.jpg" alt="category-image"/></a>
-              </div>
-
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Gaming</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-1.jpg" alt="category-image" /></a>
-              </div>
-
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>City Life</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-3.jpg" alt="category-image"/></a>
-              </div>
-
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Rave Culture</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-5.jpg" alt="category-image"/></a>
-              </div>
-
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Photography</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-7.jpg" alt="category-image"/></a>
-              </div>
-              
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Animal Kingdom</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-8.jpg" alt="category-image"/></a>
-              </div>
-
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Beach</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-10.jpg" alt="category-image"/></a>
-              </div>
-
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Climbing</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-11.jpg" alt="category-image"/></a>
-              </div>
-
-              <div className="category-preview col-xs-6 col-sm-4 ">
-                <h2>Mystery</h2>
-                <a href="category.html"><img src="http://adventurethemes.com/demo/writer/html/v2/img/cover-12.jpg" alt="category-image"/></a>
-              </div>
-
-            </section>
-          </div>
+                </section>
+            </div>
         </div>
-      </div>
+    </div>
     );
   }
 });
