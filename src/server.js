@@ -27,7 +27,7 @@ global.__CLIENT__ = false;
 global.__SERVER__ = true;
 
 nconf.argv().env().file({
-    file: relativePath('../config/config.json')
+    file: relativePath('./config.json')
 }).defaults({
 
 });
@@ -44,7 +44,7 @@ function relativePath(p) {
 }
 
 function read(filename) {
-    return fs.readFileSync(path.join(relativePath('../'), filename), 'utf8');
+    return fs.readFileSync(path.join(relativePath('./'), filename), 'utf8');
 }
 
 var appTemplate = handlebars.compile(read( nconf.get("template:file") ));
@@ -104,7 +104,7 @@ function parseHTML(res, data, Handler) {
         // bodyClass: bodyClass,
         configClient: JSON.stringify(nconf.get('public')),
         title: nconf.get('public:general:title'),
-        webpackURL: PROD ? nconf.get('url') + '/public/' : nconf.get('webpackURL') + '/dist/'
+        webpackURL: PROD ? '/public/' : nconf.get('webpackURL') + '/dist/'
     });
     res.send(result);
 }
