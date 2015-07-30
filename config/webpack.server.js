@@ -52,7 +52,9 @@ module.exports = {
         },
         ]
     },
-    plugins: [],
+    plugins: [
+        new webpack.DefinePlugin({__CLIENT__: true, __SERVER__: true}),
+    ],
     // http://webpack.github.io/docs/configuration.html#output
     output: {
         // The output directory as absolute path (required).

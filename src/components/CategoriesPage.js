@@ -2,6 +2,7 @@ import React from 'react';
 import Router from 'react-router';
 import {Link} from 'react-router';
 import axios from 'axios';
+const { getCategories } = require("../data");
 
 var count = 0;
 let Category = React.createClass({
@@ -23,7 +24,18 @@ let CategoriesPage = React.createClass({
     statics: {
         fetchData: function (routerName) {
             console.log("__CLIENT__ = ", __CLIENT__, "__SERVER__ = ", __SERVER__);
-            return axios.get('http://localhost:4000/api/categories')
+            if(__SERVER__){
+                return new Promise( function(resolve, reject) {
+                    // FIXME: reject ???
+                    getCategories(function (data) {
+                        resolve({
+                            data: data,
+                            routerName: routerName
+                        }); 
+                    });
+                });
+            }
+            return axios.get('/api/categories')
             .then(function (response) {
                 return {
                     data: response.data,

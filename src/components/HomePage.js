@@ -2,12 +2,24 @@ import React from 'react';
 import {Link} from 'react-router';
 import axios from 'axios';
 import Article from './Article';
+const { getPosts } = require("../data");
 
 let Home = React.createClass({
     statics: {
         fetchData: function (routerName) {
         console.log("__CLIENT__ = ", __CLIENT__, "__SERVER__ = ", __SERVER__);
-        return axios.get('http://localhost:4000/api/posts')
+        if(__SERVER__){
+            return new Promise( function(resolve, reject) {
+                // FIXME: reject ???
+                getPosts(function (data) {
+                    resolve({
+                        data: data,
+                        routerName: routerName
+                    }); 
+                });
+            });
+        }
+        return axios.get('/api/posts')
         .then(function (response) {
             return {
                 data: response.data,

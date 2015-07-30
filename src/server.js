@@ -23,8 +23,8 @@ require.context(
 /**
  * Define isomorphic constants.
  */
-global.__CLIENT__ = false;
-global.__SERVER__ = true;
+// global.__CLIENT__ = false;
+// global.__SERVER__ = true;
 
 nconf.argv().env().file({
     file: relativePath('./config.json')
@@ -84,7 +84,6 @@ app.use('*', function(req, res) {
         requests.map(function (a) {
             data.push(a.request(a.name, params, query));
         });
-
         Promise.all(data)
         .then(values => {
             let data = {};
