@@ -13,7 +13,5 @@
 // https://github.com/aseemk/requireDir
 var requireDir = require('require-dir');
 
-global.__rootPath = __dirname;
-
 // Require all tasks in gulp/tasks, including subfolders
 requireDir('./gulp/tasks', { recurse: true });

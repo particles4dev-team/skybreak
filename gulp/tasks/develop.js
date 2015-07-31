@@ -35,7 +35,7 @@ gulp.task('watch:server', ['watch:backend'], function(done) {
         },
 
         // your node app
-        script: path.join(__rootPath, 'build/backend'),
+        script: path.join(__dirname, '../build/backend'),
         
         // Note that by default, nodemon will ignore the .git, node_modules, bower_components and .sass-cache directories.
         // ignore everthing

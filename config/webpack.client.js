@@ -62,7 +62,7 @@ module.exports = {
         // Minimize all JavaScript output of chunks. Loaders are switched into minimizing mode. You can pass an object containing UglifyJs options.
         new webpack.optimize.UglifyJsPlugin(),
 
-        new ExtractTextPlugin('public/style/main.css', {
+        new ExtractTextPlugin('style/main.css', {
             allChunks: true
         })
     ],
@@ -90,6 +90,9 @@ module.exports = {
     // resolve
     // Options affecting the resolving of modules.
     resolve: {
+        alias: {
+            'impl': path.join(__dirname, '../src/client/data'),
+        },
         // http://webpack.github.io/docs/configuration.html#resolve-modulesdirectories
         // resolve.modulesDirectories
         // An array of directory names to be resolved to the current directory as well as its ancestors, and searched for modules. This functions similarly to how node finds “node_modules” directories. For example, if the value is ["mydir"], webpack will look in “./mydir”, “../mydir”, “../../mydir”, etc.

@@ -1,5 +1,6 @@
 const express = require('express');
-const { getPosts, getPost, getCategories, getCategory } = require("./data");
+const { getPost, getCategories, getCategory } = require("./data");
+const { getPosts } = require("impl");
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -11,7 +12,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/posts', function(req, res) {
-    getPosts(function (data) {
+    getPosts().then(function (data) {
         res.json(data);
     });
 });

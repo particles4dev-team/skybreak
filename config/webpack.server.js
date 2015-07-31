@@ -14,11 +14,6 @@ fs.readdirSync('node_modules')
 });
 
 module.exports = {
-    // http://webpack.github.io/docs/configuration.html#entry
-    // The entry point for the bundle.
-    entry: [
-        './src/server.js'
-    ],   
     // http://webpack.github.io/docs/configuration.html#target
     // "web" Compile for usage in a browser-like environment (default)
     // "webworker" Compile as WebWorker
@@ -27,6 +22,11 @@ module.exports = {
     // "node-webkit" Compile for usage in webkit, uses jsonp chunk loading but also supports builtin node.js modules plus require(“nw.gui”) (experimental)
     // "atom" Compile for usage in electron (formerly known as atom-shell), supports require for modules necessary to run Electron.
     target: 'node',
+    // http://webpack.github.io/docs/configuration.html#entry
+    // The entry point for the bundle.
+    entry: [
+        './src/server.js'
+    ],
     // http://webpack.github.io/docs/configuration.html#module
     // Options affecting the normal modules (NormalModuleFactory)
     module: {
@@ -43,12 +43,12 @@ module.exports = {
             test: /\.js?$/,
             loaders: ['babel'],
             exclude: /node_modules/,
-            include: path.join(__rootPath, 'src')
+            include: path.join(__dirname, '../src')
         },
         {
             test: /\.md$/,
             loaders: ["file-loader?name=_content/[name].post.json", "markdown-with-front-matter"],
-            include: path.join(__rootPath, 'posts')
+            include: path.join(__dirname, '../posts')
         },
         ]
     },
@@ -58,7 +58,7 @@ module.exports = {
     // http://webpack.github.io/docs/configuration.html#output
     output: {
         // The output directory as absolute path (required).
-        path: path.join(__rootPath, 'build'),
+        path: path.join(__dirname, '../build'),
         // The filename of the entry chunk as relative path inside the output.path directory.
         filename: 'backend.js'
     },
@@ -73,6 +73,9 @@ module.exports = {
     // alias:                   require("xyz")    require("xyz/file.js")
     // { xyz: "./dir/file.js" } /abc/dir/file.js  /abc/node_modules/xyz/file.js
     resolve: {
+        alias: {
+            'impl': path.join(__dirname, '../src/server/data'),
+        },
         // resolve.extensions
         // An array of extensions that should be used to resolve modules. For example, in order to discover CoffeeScript files, your array should contain the string ".coffee".
         // Default: ["", ".webpack.js", ".web.js", ".js"]
