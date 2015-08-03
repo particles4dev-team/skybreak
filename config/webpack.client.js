@@ -4,6 +4,17 @@ var path                = require("path");
 // https://github.com/webpack/extract-text-webpack-plugin
 var ExtractTextPlugin   = require('extract-text-webpack-plugin');
 
+// Read files from client folder then import it into webpack.resolve.alias
+var node_modules = {};
+fs.readdirSync('src/client')
+.filter(function(x) {
+    console.log(x);
+    return true;
+})
+.forEach(function(mod) {
+    node_modules[mod] = 'commonjs ' + mod;
+});
+
 module.exports = {
     // http://webpack.github.io/docs/configuration.html#target
     // "web" Compile for usage in a browser-like environment (default)

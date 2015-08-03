@@ -4,7 +4,10 @@ var src   = './src';
 module.exports = {
   del: {
     files: [
-      dest + '/*'
+      dest + '/backend.js',
+      dest + '/_content/*',
+      dest + '/public/client.js',
+      dest + '/public/style/*'
     ]
   }
 };

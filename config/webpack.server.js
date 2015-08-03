@@ -53,7 +53,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.DefinePlugin({__CLIENT__: true, __SERVER__: true}),
+        new webpack.DefinePlugin({__CLIENT__: false, __SERVER__: true}),
     ],
     // http://webpack.github.io/docs/configuration.html#output
     output: {
@@ -80,7 +80,7 @@ module.exports = {
         // An array of extensions that should be used to resolve modules. For example, in order to discover CoffeeScript files, your array should contain the string ".coffee".
         // Default: ["", ".webpack.js", ".web.js", ".js"]
         // IMPORTANT: Setting this option will override the default, meaning that webpack will no longer try to resolve modules using the default extensions. If you want modules that were required with their extension (e.g. require('./somefile.ext')) to be properly resolved, you must include an empty string in your array. Similarly, if you want modules that were required without extensions (e.g. require('underscore')) to be resolved to files with “.js” extensions, you must include ".js" in your array.
-    
+
         // you can now require('file') instead of require('file.jsx')
         extensions: ["", ".js", ".jsx", ".scss", ".md"]
     },
