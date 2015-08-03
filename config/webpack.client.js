@@ -1,18 +1,23 @@
 var webpack             = require("webpack");
 var path                = require("path");
+var fs                  = require("fs");
 
 // https://github.com/webpack/extract-text-webpack-plugin
 var ExtractTextPlugin   = require('extract-text-webpack-plugin');
 
+function getFileName (fullPath) {
+    return fullPath.replace(/^.*[\\\/]/, '')
+}
+
 // Read files from client folder then import it into webpack.resolve.alias
-var node_modules = {};
+var client_modules = {};
 fs.readdirSync('src/client')
 .filter(function(x) {
-    console.log(x);
     return true;
 })
 .forEach(function(mod) {
-    node_modules[mod] = 'commonjs ' + mod;
+    var fName = getFileName(mod).replace(/\..+$/, '');
+    client_modules[fName] = path.join(__dirname, '../src/client/' + fName);
 });
 
 module.exports = {
@@ -101,9 +106,7 @@ module.exports = {
     // resolve
     // Options affecting the resolving of modules.
     resolve: {
-        alias: {
-            'impl': path.join(__dirname, '../src/client/data'),
-        },
+        alias: client_modules,
         // http://webpack.github.io/docs/configuration.html#resolve-modulesdirectories
         // resolve.modulesDirectories
         // An array of directory names to be resolved to the current directory as well as its ancestors, and searched for modules. This functions similarly to how node finds “node_modules” directories. For example, if the value is ["mydir"], webpack will look in “./mydir”, “../mydir”, “../../mydir”, etc.

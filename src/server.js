@@ -13,6 +13,7 @@ const routes = require('./components/Routes');
 const api = require('./api');
 const PROD = process.env.NODE_ENV === 'production';
 
+require('../_config');
 // convert .md to .json
 require.context(
     "../posts", // context folder
@@ -23,11 +24,8 @@ require.context(
 /**
  * Define isomorphic constants.
  */
-// global.__CLIENT__ = false;
-// global.__SERVER__ = true;
-
 nconf.argv().env().file({
-    file: relativePath('./config.json')
+    file: relativePath('./_config.skybreak.json')
 }).defaults({
 
 });
@@ -36,6 +34,8 @@ let app = express();
 app.use(bodyParser.json());
 
 app.use(cors());
+
+console.log(nconf.get("template:file"));
 
 // TEMPLATE
 // =============================================================================

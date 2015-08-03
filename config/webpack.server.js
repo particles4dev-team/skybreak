@@ -13,6 +13,21 @@ fs.readdirSync('node_modules')
     node_modules[mod] = 'commonjs ' + mod;
 });
 
+function getFileName (fullPath) {
+    return fullPath.replace(/^.*[\\\/]/, '')
+}
+
+// Read files from server folder then import it into webpack.resolve.alias
+var server_modules = {};
+fs.readdirSync('src/server')
+.filter(function(x) {
+    return true;
+})
+.forEach(function(mod) {
+    var fName = getFileName(mod).replace(/\..+$/, '');
+    server_modules[fName] = path.join(__dirname, '../src/server/' + fName);
+});
+
 module.exports = {
     // http://webpack.github.io/docs/configuration.html#target
     // "web" Compile for usage in a browser-like environment (default)
@@ -50,6 +65,11 @@ module.exports = {
             loaders: ["file-loader?name=_content/[name].post.json", "markdown-with-front-matter"],
             include: path.join(__dirname, '../posts')
         },
+        {
+
+            test: /\.yml$/,
+            loaders: ["file-loader?name=[name].skybreak.json", "yaml-config-loader"]
+        }
         ]
     },
     plugins: [
@@ -73,16 +93,14 @@ module.exports = {
     // alias:                   require("xyz")    require("xyz/file.js")
     // { xyz: "./dir/file.js" } /abc/dir/file.js  /abc/node_modules/xyz/file.js
     resolve: {
-        alias: {
-            'impl': path.join(__dirname, '../src/server/data'),
-        },
+        alias: server_modules,
         // resolve.extensions
         // An array of extensions that should be used to resolve modules. For example, in order to discover CoffeeScript files, your array should contain the string ".coffee".
         // Default: ["", ".webpack.js", ".web.js", ".js"]
         // IMPORTANT: Setting this option will override the default, meaning that webpack will no longer try to resolve modules using the default extensions. If you want modules that were required with their extension (e.g. require('./somefile.ext')) to be properly resolved, you must include an empty string in your array. Similarly, if you want modules that were required without extensions (e.g. require('underscore')) to be resolved to files with “.js” extensions, you must include ".js" in your array.
 
         // you can now require('file') instead of require('file.jsx')
-        extensions: ["", ".js", ".jsx", ".scss", ".md"]
+        extensions: ["", ".js", ".jsx", ".scss", ".md", ".yml"]
     },
     // http://webpack.github.io/docs/configuration.html#externals
     // Specify dependencies that shouldn’t be resolved by webpack, but should become dependencies of the resulting bundle. The kind of the dependency depends on output.libraryTarget.

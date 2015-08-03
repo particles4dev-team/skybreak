@@ -48,6 +48,7 @@
     "sass-loader": "^1.0.3",
     "style-loader": "^0.12.3",
     "webpack": "^1.10.1",
-    "webpack-dev-server": "^1.8.2"
+    "webpack-dev-server": "^1.8.2",
+    "yaml-config-loader": "git://github.com/particle4dev/yaml-config-loader#master"
   }
 }
