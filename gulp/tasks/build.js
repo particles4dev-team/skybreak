@@ -12,10 +12,10 @@ gulp.task('build:client', function(done) {
         done();
     });
     child.stdout.on('data', function(buf) {
-        console.log('"%s"', String(buf));
+        console.log('%s', String(buf));
     });
     child.stderr.on('data', function (buf) {
-        console.error('"%s"', String(buf));
+        console.error('%s', String(buf));
     });
 });
 
@@ -26,9 +26,9 @@ gulp.task('build:server', function (done) {
         done();
     });
     child.stdout.on('data', function(buf) {
-        console.log('"%s"', String(buf));
+        console.log('%s', String(buf));
     });
     child.stderr.on('data', function (buf) {
-        console.error('"%s"', String(buf));
+        console.error('%s', String(buf));
     });
 });

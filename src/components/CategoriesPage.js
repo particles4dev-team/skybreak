@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'react-router';
 import {Link} from 'react-router';
 import axios from 'axios';
-const { getCategories } = require("../data");
+const { getCategories } = require("impl");
 
 var count = 0;
 let Category = React.createClass({
@@ -24,27 +24,7 @@ let CategoriesPage = React.createClass({
     statics: {
         fetchData: function (routerName) {
             console.log("__CLIENT__ = ", __CLIENT__, "__SERVER__ = ", __SERVER__);
-            if(__SERVER__){
-                return new Promise( function(resolve, reject) {
-                    // FIXME: reject ???
-                    getCategories(function (data) {
-                        resolve({
-                            data: data,
-                            routerName: routerName
-                        }); 
-                    });
-                });
-            }
-            return axios.get('/api/categories')
-            .then(function (response) {
-                return {
-                    data: response.data,
-                    routerName: routerName
-                };
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            return getCategories(routerName);
         },
     },
     render: function () {
@@ -54,7 +34,7 @@ let CategoriesPage = React.createClass({
         for (var prop in tags.data) {
             if( tags.data.hasOwnProperty( prop ) ) {
                 rows.push(<Category title={prop} data={tags.data[prop]} />);
-            } 
+            }
         }
         return (
         <div style={this.props.style}>
@@ -67,7 +47,7 @@ let CategoriesPage = React.createClass({
                 </Link>
             </div>
             <div className="home-page-categories animated fadeIn">
-                
+
                 <div className="category row">
                 <section>
 

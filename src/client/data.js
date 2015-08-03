@@ -13,13 +13,40 @@ module.exports = {
             console.log(error);
         });
     },
-    getPost: function () {
-        console.warn('this function only work on server');
+    getPost: function (id, routerName) {
+      return axios.get('/api/post/' + id)
+        .then(function (response) {
+         return {
+             data: response.data,
+             routerName: routerName
+         };
+       })
+       .catch(function (error) {
+         console.log(error);
+       });
     },
-    getCategories: function () {
-        console.warn('this function only work on server');
+    getCategories: function (routerName) {
+        return axios.get('/api/categories')
+        .then(function (response) {
+            return {
+                data: response.data,
+                routerName: routerName
+            };
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     },
-    getCategory: function () {
-        console.warn('this function only work on server');
+    getCategory: function (id, routerName) {
+        return axios.get('/api/category/' + id)
+        .then(function (response) {
+            return {
+                data: response.data,
+                routerName: routerName
+            };
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 };

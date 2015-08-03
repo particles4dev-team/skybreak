@@ -35,12 +35,12 @@ gulp.task('watch:server', ['watch:backend'], function(done) {
         },
 
         // your node app
-        script: path.join(__dirname, '../build/backend'),
-        
+        script: path.join(__dirname, '../../build/backend'),
+
         // Note that by default, nodemon will ignore the .git, node_modules, bower_components and .sass-cache directories.
         // ignore everthing
         ignore: ['*'],
-        
+
         // Now nodemon will only restart if there are changes in the ./foo directory.
         watch: ['foo/'],
 
@@ -70,41 +70,20 @@ gulp.task('watch:backend', function (done) {
     });
 });
 
+var child_process       = require('child_process');
 gulp.task('watch:client', function(done) {
-    // node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client-watch.js
-    // node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config config/webpack.client-watch.js
-    // https://github.com/webpack/webpack-dev-server/blob/master/bin/webpack-dev-server.js
-    var outputOptions = Object.create(configWatch.stats || {});
-    outputOptions.reasons = true;
-    outputOptions.colors = true;
-    outputOptions.errorDetails = true;
-    outputOptions.exclude = ["node_modules", "bower_components", "jam", "components"];
-    outputOptions.port = 8080;
-    outputOptions.host = "localhost";
-    var protocol = configWatch.https ? "https" : "http";
-    
-    var options = configWatch.devServer || {};
-    options.stats = outputOptions;
-
-    if(!outputOptions.publicPath) {
-        outputOptions.publicPath = configWatch.output && configWatch.output.publicPath || "";
-        if(!/^(https?:)?\/\//.test(outputOptions.publicPath) && outputOptions.publicPath[0] !== "/")
-            outputOptions.publicPath = "/" + outputOptions.publicPath;
-    }
-    new WebpackDevServer(webpack(configWatch), options)
-    .listen(outputOptions.port, outputOptions.host, function (err, result) {
-        if(err) throw err;
-        if(options.inline)
-            console.log(protocol + "://" + outputOptions.host + ":" + outputOptions.port + "/");
-        else
-            console.log(protocol + "://" + outputOptions.host + ":" + outputOptions.port + "/webpack-dev-server/");
-        console.log("webpack result is served from " + outputOptions.publicPath);
-        if(typeof options.contentBase === "object")
-            console.log("requests are proxied to " + options.contentBase.target);
-        else
-            console.log("content is served from " + options.contentBase);
-        if(options.historyApiFallback)
-            console.log("404s will fallback to /index.html");
-        done();
-    });
+  // node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client-watch.js
+  // node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config config/webpack.client-watch.js
+  // https://github.com/webpack/webpack-dev-server/blob/master/bin/webpack-dev-server.js
+  var child = child_process.exec('node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client-watch.js && node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config config/webpack.client-watch.js',
+      function (error, stdout, stderr) {
+          // console.log(error, stdout, stderr);
+      done();
+  });
+  child.stdout.on('data', function(buf) {
+      console.log('%s', String(buf));
+  });
+  child.stderr.on('data', function (buf) {
+      console.error('%s', String(buf));
+  });
 });
