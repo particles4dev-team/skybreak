@@ -1,15 +1,4 @@
 # Skybreak Configuration
-
-# Site
-title: Skybreak
-subtitle:
-description:
-author: Hoang Le
-language:
-timezone:
-
-anita_antoinette: Turn Your Lights Down Low
-
 url: http://localhost:4000
 webpackURL: http://localhost:8080
 
@@ -21,5 +10,13 @@ template:
 
 public:
   general:
+    # Site
     title: iojs vietnam
     description: Bringing ES6 to the Node Community in Vietnam.
+    subtitle:
+    description:
+    author: Hoang Le
+    language:
+    timezone:
+
+layouts: universe

@@ -8,7 +8,8 @@ module.exports = {
       dest + '/_content/*',
       dest + '/public/client.js',
       dest + '/public/style/*',
-      dest + '/_config.skybreak.json'
+      dest + '/_config.skybreak.json',
+      dest + '/template.html'
     ]
   }
 };

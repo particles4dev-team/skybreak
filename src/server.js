@@ -30,12 +30,13 @@ nconf.argv().env().file({
 
 });
 
+// import .html
+require("../_themes/" + nconf.get("layouts") + "/template.html");
+
 let app = express();
 app.use(bodyParser.json());
 
 app.use(cors());
-
-console.log(nconf.get("template:file"));
 
 // TEMPLATE
 // =============================================================================

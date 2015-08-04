@@ -7,7 +7,8 @@ import Router from 'react-router';
 import nconf from 'nconf';
 import routes from './components/Routes';
 
-require('./sass/main.scss');
+// import css
+require('../_themes/universe/sass/main.scss');
 
 function decodeTextContent(str) {
     return str.replace(/(&lt;|&gt;|&amp;|&quot;)/g, function(str) {

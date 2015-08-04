@@ -69,6 +69,11 @@ module.exports = {
 
             test: /\.yml$/,
             loaders: ["file-loader?name=[name].skybreak.json", "yaml-config-loader"]
+        },
+        {
+
+            test: /\.html$/,
+            loaders: ["file-loader?name=[name].html"]
         }
         ]
     },
