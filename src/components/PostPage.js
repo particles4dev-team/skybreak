@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
 import axios from 'axios';
+
+const Disqus = require("_includes/disqus");
 const { getPost } = require("impl");
 
 function decodeTextContent(str) {
@@ -36,6 +38,7 @@ let Post = React.createClass({
             <div className="col-xs-12 single-content">
                 <div dangerouslySetInnerHTML={{__html: post.content}}></div>
             </div>
+            <Disqus/>
         </div>
         );
     }

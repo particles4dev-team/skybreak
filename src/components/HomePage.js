@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import Article from './Article';
+
 const { getPosts } = require("impl");
 
 let Home = React.createClass({

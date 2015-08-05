@@ -20,6 +20,16 @@ fs.readdirSync('src/client')
     client_modules[fName] = path.join(__dirname, '../src/client/' + fName);
 });
 
+// Read files from _includes folder then import it into webpack.resolve.alias
+fs.readdirSync('_includes')
+.filter(function(x) {
+    return true;
+})
+.forEach(function(mod) {
+    var fName = getFileName(mod).replace(/\..+$/, '');
+    client_modules['_includes/' + fName] = path.join(__dirname, '../_includes/' + fName);
+});
+
 module.exports = {
     // http://webpack.github.io/docs/configuration.html#target
     // "web" Compile for usage in a browser-like environment (default)
@@ -95,7 +105,7 @@ module.exports = {
             {
                 test: /\.js?$/,
                 loaders: ['babel'],
-                include: path.join(__dirname, '../src')
+                include: [path.join(__dirname, '../src'), path.join(__dirname, '../_includes')]
             },
             {
                 test: /\.scss$/,
