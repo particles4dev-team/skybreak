@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import axios from 'axios';
 
 const Disqus = require("_includes/disqus");
+const ShareSocialMedia = require("_includes/shareSocialMedia");
 const { getPost } = require("impl");
 
 function decodeTextContent(str) {
@@ -38,7 +39,10 @@ let Post = React.createClass({
             <div className="col-xs-12 single-content">
                 <div dangerouslySetInnerHTML={{__html: post.content}}></div>
             </div>
-            <Disqus/>
+            <ShareSocialMedia post={post} />
+            <Disqus
+                shortname="iojs-vi"
+                title={post.title} />
         </div>
         );
     }

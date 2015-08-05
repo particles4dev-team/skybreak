@@ -11,11 +11,19 @@ template:
 public:
   general:
     # Site
+    baseUrl: http://localhost:4000
     title: iojs vietnam
     description: Bringing ES6 to the Node Community in Vietnam.
     subtitle:
     author: Hoang Le
     language:
     timezone:
+    name: iojs-vi
+    email: iojs-vi@gmail.com
+    github: iojs
+    twitter: iojs_vi
+    pinterest: iojs_vi
+    linkedin: iojs_vi
+    bio: Bringing ES6 to the Node Community in Vietnam!
 
 layouts: universe
