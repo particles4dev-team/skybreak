@@ -2,7 +2,7 @@ import axios from 'axios';
 
 module.exports = {
     getPosts: function (routerName) {
-    	return axios.get('/api/posts')
+    	return axios.get('/api/v0/posts')
         .then(function (response) {
             return {
                 data: response.data,
@@ -14,7 +14,7 @@ module.exports = {
         });
     },
     getPost: function (id, routerName) {
-      return axios.get('/api/post/' + id)
+      return axios.get('/api/v0/post/' + id)
         .then(function (response) {
          return {
              data: response.data,
@@ -26,7 +26,7 @@ module.exports = {
        });
     },
     getCategories: function (routerName) {
-        return axios.get('/api/categories')
+        return axios.get('/api/v0/categories')
         .then(function (response) {
             return {
                 data: response.data,
@@ -38,7 +38,7 @@ module.exports = {
         });
     },
     getCategory: function (id, routerName) {
-        return axios.get('/api/category/' + id)
+        return axios.get('/api/v0/category/' + id)
         .then(function (response) {
             return {
                 data: response.data,

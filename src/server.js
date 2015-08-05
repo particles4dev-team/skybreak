@@ -10,7 +10,6 @@ const Router = require('react-router');
 const t = require('transducers.js');
 const { range, seq, compose, map, filter, take } = t;
 const routes = require('./components/Routes');
-const api = require('./api');
 const PROD = process.env.NODE_ENV === 'production';
 
 require('../_config');
@@ -57,12 +56,26 @@ app.use('/public', express.static(path.join(relativePath('../build/public'))));
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use('/api', api);
+// define the versions
+// var VERSIONS = {'Pre-Production': '/v0', 'Version 1': '/v1'};
+var VERSIONS = {'Version 0': 'v0'};
+var api = require('./api');
+
+app.get('/api', function(req, res) {
+    res.json(VERSIONS);
+});
+
+// versioned routes go in the api/ directory
+// import the routes
+for (var k in VERSIONS) {
+    app.use('/api/' + VERSIONS[k], api[VERSIONS[k]]);
+}
 
 app.get('/api/*', function(req, res) {
     res.send('bad API request');
 });
 
+// =============================================================================
 app.use('*', function(req, res) {
     Router.run(routes, req.originalUrl, function(Handler, state) {
         let data = [];
