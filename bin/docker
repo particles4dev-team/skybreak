@@ -1,0 +1,19 @@
+#!/bin/sh
+case "$1" in
+  build)
+    docker build -t particle4dev/skybreak .
+    ;;
+         
+  run)
+    docker run -d -P particle4dev/skybreak /bin/bash /site/run
+    ;;
+  
+  remove)
+  	docker ps -a | grep 'About an hour ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm && docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+  	;;
+
+  *)
+    echo $"Usage: $0 {build|run}"
+    exit 1
+
+esac
