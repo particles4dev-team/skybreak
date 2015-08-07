@@ -8,14 +8,14 @@ const handlebars = require('handlebars');
 const React = require('react');
 const Router = require('react-router');
 const t = require('transducers.js');
-const { range, seq, compose, map, filter, take } = t;
+const { seq, compose, map, filter } = t;
 const routes = require('./components/Routes');
 const PROD = process.env.NODE_ENV === 'production';
 
 require('../_config');
 // convert .md to .json
 require.context(
-    "../posts", // context folder
+    '../posts', // context folder
     true, // include subdirectories
     /\.md$/ // RegExp
 );
@@ -30,7 +30,7 @@ nconf.argv().env().file({
 });
 
 // import .html
-require("../_themes/" + nconf.get("layouts") + "/template.html");
+require('../_themes/' + nconf.get('layouts') + '/template.html');
 
 let app = express();
 app.use(bodyParser.json());
@@ -39,15 +39,15 @@ app.use(cors());
 
 // TEMPLATE
 // =============================================================================
-function relativePath(p) {
+function relativePath (p) {
     return path.join(__dirname, p);
 }
 
-function read(filename) {
+function read (filename) {
     return fs.readFileSync(path.join(relativePath('./'), filename), 'utf8');
 }
 
-var appTemplate = handlebars.compile(read( nconf.get("template:file") ));
+let appTemplate = handlebars.compile(read( nconf.get('template:file') ));
 
 // hand STATIC REQUEST
 // http://expressjs.com/starter/static-files.html
@@ -57,30 +57,30 @@ app.use('/public', express.static(path.join(relativePath('../build/public'))));
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 // define the versions
-// var VERSIONS = {'Pre-Production': '/v0', 'Version 1': '/v1'};
-var VERSIONS = {'Version 0': 'v0'};
-var api = require('./api');
+// let VERSIONS = {'Pre-Production': '/v0', 'Version 1': '/v1'};
+let VERSIONS = { 'Version 0': 'v0' };
+let api = require('./api');
 
-app.get('/api', function(req, res) {
+app.get('/api', function (req, res) {
     res.json(VERSIONS);
 });
 
 // versioned routes go in the api/ directory
 // import the routes
-for (var k in VERSIONS) {
+for (let k in VERSIONS) {
     app.use('/api/' + VERSIONS[k], api[VERSIONS[k]]);
 }
 
-app.get('/api/*', function(req, res) {
+app.get('/api/*', function (req, res) {
     res.send('bad API request');
 });
 
 // =============================================================================
-app.use('*', function(req, res) {
-    Router.run(routes, req.originalUrl, function(Handler, state) {
-        let data = [];
+app.use('*', function (req, res) {
+    Router.run(routes, req.originalUrl, function (Handler, state) {
+        let results = [];
 
-        var { params, query } = state;
+        let { params, query } = state;
 
         let requests = seq(state.routes, compose(
             filter(x => x.handler.fetchData),
@@ -95,10 +95,10 @@ app.use('*', function(req, res) {
             // filter(x => !!x.request)
         ));
 
-        requests.map(function (a) {
-            data.push(a.request(a.name, params, query));
+        requests.map( function (a) {
+            results.push(a.request(a.name, params, query));
         });
-        Promise.all(data)
+        Promise.all(results)
         .then(values => {
             let data = {};
             values.map((d) => {
@@ -109,9 +109,9 @@ app.use('*', function(req, res) {
     });
 });
 
-function parseHTML(res, data, Handler) {
-    var html = React.renderToString(<Handler data={data} />);
-    var result = appTemplate({
+function parseHTML (res, data, Handler) {
+    let html = React.renderToString(<Handler data={data} />);
+    let result = appTemplate({
         content: html,
         payload: JSON.stringify(data),
         // bodyClass: bodyClass,
@@ -122,6 +122,6 @@ function parseHTML(res, data, Handler) {
     res.send(result);
 }
 
-var port = nconf.get('http:port');
+let port = nconf.get('http:port');
 app.listen(port);
-console.log("Listening on port " + port);
+console.log('Listening on port ' + port);
