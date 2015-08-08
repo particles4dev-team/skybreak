@@ -1,6 +1,6 @@
 {
   "name": "skybreak",
-  "version": "0.0.1",
+  "version": "0.6.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,10 @@
     "nconf": "^0.7.1",
     "node-dir": "^0.1.8",
     "react": "^0.13.3",
+    "react-redux": "^0.3.0",
     "react-router": "^0.13.3",
+    "redux": "^1.0.0-rc",
+    "redux-thunk": "^0.1.0",
     "transducers.js": "^0.3.2"
   },
   "devDependencies": {
@@ -36,6 +39,7 @@
     "eslint-plugin-react": "^2.3.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
+    "glob": "^5.0.14",
     "gulp": "^3.9.0",
     "gulp-notify": "^2.2.0",
     "json-loader": "^0.5.2",

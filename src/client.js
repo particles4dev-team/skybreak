@@ -7,6 +7,7 @@ import routes from './components/Routes';
 
 // import css
 require('../_themes/universe/sass/main.scss');
+require('count');
 
 function decodeTextContent (str) {
     return str.replace(/(&lt;|&gt;|&amp;|&quot;)/g, function (s) {

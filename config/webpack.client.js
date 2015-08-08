@@ -1,6 +1,8 @@
-var webpack             = require("webpack");
-var path                = require("path");
-var fs                  = require("fs");
+var webpack             = require('webpack');
+var path                = require('path');
+var fs                  = require('fs');
+var glob                = require('glob');
+var importFiles         = require('./importFiles');
 
 // https://github.com/webpack/extract-text-webpack-plugin
 var ExtractTextPlugin   = require('extract-text-webpack-plugin');
@@ -9,16 +11,9 @@ function getFileName (fullPath) {
     return fullPath.replace(/^.*[\\\/]/, '')
 }
 
-// Read files from client folder then import it into webpack.resolve.alias
 var client_modules = {};
-fs.readdirSync('src/client')
-.filter(function(x) {
-    return true;
-})
-.forEach(function(mod) {
-    var fName = getFileName(mod).replace(/\..+$/, '');
-    client_modules[fName] = path.join(__dirname, '../src/client/' + fName);
-});
+// Read files from client folder then import it into webpack.resolve.alias
+importFiles.loadPath('src/client/*', client_modules);
 
 // Read files from _includes folder then import it into webpack.resolve.alias
 fs.readdirSync('_includes')
