@@ -4,9 +4,6 @@ import React from 'react';
 import Router from 'react-router';
 import nconf from 'nconf';
 
-// import css
-require('../_themes/universe/sass/main.scss');
-
 function decodeTextContent (str) {
     return str.replace(/(&lt;|&gt;|&amp;|&quot;)/g, function (s) {
         return {
@@ -23,7 +20,10 @@ let config = JSON.parse(
 );
 
 nconf.defaults(config);
-console.log(nconf.get('layouts'));
+
+// import css
+require('../_themes/' + nconf.get('layouts') + '/sass/main.scss');
+
 const routes = require('../_themes/' + nconf.get('layouts') + '/components/Routes');
 
 let payload = JSON.parse(

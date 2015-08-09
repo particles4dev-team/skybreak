@@ -25,4 +25,4 @@ public:
     pinterest: iojs_vi
     linkedin: iojs_vi
     bio: Bringing ES6 to the Node Community in Vietnam!
-  layouts: universe
+  layouts: gitbook

@@ -116,7 +116,7 @@ function parseHTML (res, data, Handler) {
         payload: JSON.stringify(data),
         // bodyClass: bodyClass,
         configClient: JSON.stringify(nconf.get('public')),
-        title: nconf.get('public:general:title'),
+        title: nconf.get('public:general:title') + ' | ' + nconf.get('public:layouts'),
         webpackURL: PROD ? '/public/' : nconf.get('webpackURL') + '/dist/'
     });
     res.send(result);
