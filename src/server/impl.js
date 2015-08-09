@@ -46,7 +46,7 @@ let getPosts = function (routerName) {
 let getPost = function (id, routerName) {
     return new Promise( function (resolve, /**reject*/) {
         // FIXME: reject ???
-        fs.readFile(path.resolve(__dirname, '/_content/', id),
+        fs.readFile(path.join(__dirname, '/_content/', id),
             function (err, data) {
             if (err) { throw err; }
             if(routerName) {

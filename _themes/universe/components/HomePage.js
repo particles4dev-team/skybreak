@@ -1,16 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router';
 import Article from './Article';
-
-const { getPosts } = require("impl");
+const PostsMixin         = require("mixin/Posts");
 
 let Home = React.createClass({
-    statics: {
-        fetchData: function (routerName) {
-            console.log("__CLIENT__ = ", __CLIENT__, "__SERVER__ = ", __SERVER__);
-            return getPosts(routerName);
-        },
-    },
+    mixins: [PostsMixin], // Use the mixin
 
     /**
     * propTypes

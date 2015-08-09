@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'react-router';
 import {Link} from 'react-router';
 import axios from 'axios';
-const { getCategories } = require("impl");
+const CategoriesMixin = require("mixin/Categories");
 
 var count = 0;
 let Category = React.createClass({
@@ -21,12 +21,7 @@ let Category = React.createClass({
 });
 
 let CategoriesPage = React.createClass({
-    statics: {
-        fetchData: function (routerName) {
-            console.log("__CLIENT__ = ", __CLIENT__, "__SERVER__ = ", __SERVER__);
-            return getCategories(routerName);
-        },
-    },
+    mixins: [CategoriesMixin], // Use the mixin
     render: function () {
         count = 0;
         var tags = this.props.data['categories'];

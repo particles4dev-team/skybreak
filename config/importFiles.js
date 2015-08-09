@@ -6,19 +6,20 @@ function isFile (file) {
 }
 
 module.exports = {
-    loadPath: function (p, client_modules) {
+    loadPath: function (p, modules) {
         var files = glob.sync(p, {});
 
         files.forEach(function (file) {
             var fileOrigin = file;
             if (isFile(file)) {
-                client_modules[(file).replace(/\..+$/, '').replace(/^src\/client\//, '')] = path.join(__dirname, '../', fileOrigin.replace(/\..+$/, ''));
+                modules[(file).replace(/\..+$/, '').replace(/^src\//, '').replace(/^(client|server)\//, '')] = path.join(__dirname, '../', fileOrigin.replace(/\..+$/, ''));
             }
             else {
-                client_modules[(file).replace(/\..+$/, '').replace(/^src\/client\//, '')] = path.join(__dirname, '../', fileOrigin.replace(/\..+$/, ''), 'index');
+                // module
+                modules[(file).replace(/\..+$/, '').replace(/^src\/(client|server)\//, '')] = path.join(__dirname, '../', fileOrigin.replace(/\..+$/, ''), 'index');
             }   
         });
 
-        return client_modules;
+        return modules;
     }
 };

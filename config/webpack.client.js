@@ -1,8 +1,8 @@
-var webpack             = require('webpack');
-var path                = require('path');
-var fs                  = require('fs');
-var glob                = require('glob');
-var importFiles         = require('./importFiles');
+var webpack                     = require('webpack');
+var path                        = require('path');
+var fs                          = require('fs');
+var glob                        = require('glob');
+var importFiles                 = require('./importFiles');
 
 // https://github.com/webpack/extract-text-webpack-plugin
 var ExtractTextPlugin   = require('extract-text-webpack-plugin');
@@ -14,6 +14,9 @@ function getFileName (fullPath) {
 var client_modules = {};
 // Read files from client folder then import it into webpack.resolve.alias
 importFiles.loadPath('src/client/*', client_modules);
+
+// Read files from mixin folder then import it into webpack.resolve.alias
+importFiles.loadPath('src/mixin/*', client_modules);
 
 // Read files from _includes folder then import it into webpack.resolve.alias
 fs.readdirSync('_includes')
@@ -100,7 +103,7 @@ module.exports = {
             {
                 test: /\.js?$/,
                 loaders: ['babel'],
-                include: [path.join(__dirname, '../src'), path.join(__dirname, '../_includes')]
+                include: [path.join(__dirname, '../src'), path.join(__dirname, '../_includes'), path.join(__dirname, '../_themes')]
             },
             {
                 test: /\.scss$/,

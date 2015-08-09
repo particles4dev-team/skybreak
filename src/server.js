@@ -9,7 +9,6 @@ const React = require('react');
 const Router = require('react-router');
 const t = require('transducers.js');
 const { seq, compose, map, filter } = t;
-const routes = require('./components/Routes');
 const PROD = process.env.NODE_ENV === 'production';
 
 require('../_config');
@@ -29,8 +28,9 @@ nconf.argv().env().file({
 
 });
 
-// import .html
-require('../_themes/' + nconf.get('layouts') + '/template.html');
+// import template.html (copy from theme to build folder)
+require('../_themes/' + nconf.get('public:layouts') + '/template.html');
+const routes = require('../_themes/' + nconf.get('public:layouts') + '/components/Routes');
 
 let app = express();
 app.use(bodyParser.json());

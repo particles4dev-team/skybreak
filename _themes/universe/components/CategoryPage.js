@@ -2,15 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router';
 import Article from './Article';
-const { getCategory } = require("impl");
+const CategoryMixin = require("mixin/Category");
 
 let CategoryPage = React.createClass({
-    statics: {
-        fetchData: function (routerName, params, query) {
-            console.log("__CLIENT__ = ", __CLIENT__, "__SERVER__ = ", __SERVER__);
-            return getCategory(params.id, routerName);
-        },
-    },
+    mixins: [CategoryMixin], // Use the mixin
     render: function () {
         var posts = this.props.data['category'].data.posts;
         var rows = [];

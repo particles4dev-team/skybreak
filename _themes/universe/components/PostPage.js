@@ -2,9 +2,9 @@ import React from 'react';
 import {Link} from 'react-router';
 import axios from 'axios';
 
-const Disqus = require("_includes/disqus");
-const ShareSocialMedia = require("_includes/shareSocialMedia");
-const { getPost } = require("impl");
+const Disqus            = require("_includes/disqus");
+const ShareSocialMedia  = require("_includes/shareSocialMedia");
+const PostMixin         = require("mixin/Post");
 
 function decodeTextContent(str) {
     return str.replace(/(&lt;|&gt;|&amp;)/g, function(str) {
@@ -17,12 +17,7 @@ function decodeTextContent(str) {
 }
 
 let Post = React.createClass({
-    statics: {
-        fetchData: function (routerName, params, query) {
-        console.log("__CLIENT__ = ", __CLIENT__, "__SERVER__ = ", __SERVER__);
-        return getPost(params.id, routerName);
-        },
-    },
+    mixins: [PostMixin], // Use the mixin
     render: function () {
         var post = this.props.data['post'];
         post.content = decodeTextContent(post.__content);

@@ -1,6 +1,8 @@
-var webpack                   = require("webpack");
-var path                      = require('path');
-var fs                        = require('fs');
+var webpack                     = require("webpack");
+var path                        = require('path');
+var fs                          = require('fs');
+var MyPlugin                    = require('./myplugin');
+var importFiles                 = require('./importFiles');
 
 var node_modules = {};
 fs.readdirSync('node_modules')
@@ -19,14 +21,10 @@ function getFileName (fullPath) {
 
 // Read files from server folder then import it into webpack.resolve.alias
 var server_modules = {};
-fs.readdirSync('src/server')
-.filter(function(x) {
-    return true;
-})
-.forEach(function(mod) {
-    var fName = getFileName(mod).replace(/\..+$/, '');
-    server_modules[fName] = path.join(__dirname, '../src/server/' + fName);
-});
+importFiles.loadPath('src/server/*', server_modules);
+
+// Read files from mixin folder then import it into webpack.resolve.alias
+importFiles.loadPath('src/mixin/*', server_modules);
 
 // Read files from _includes folder then import it into webpack.resolve.alias
 fs.readdirSync('_includes')
@@ -68,7 +66,7 @@ module.exports = {
             test: /\.js?$/,
             loaders: ['babel'],
             exclude: /node_modules/,
-            include: [path.join(__dirname, '../src'), path.join(__dirname, '../_includes')]
+            include: [path.join(__dirname, '../src'), path.join(__dirname, '../_includes'), path.join(__dirname, '../_themes')]
         },
         {
             test: /\.md$/,
@@ -89,6 +87,9 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({__CLIENT__: false, __SERVER__: true}),
+        // new MyPlugin({
+        //     optiones: 'nada'
+        // })
     ],
     // http://webpack.github.io/docs/configuration.html#output
     output: {

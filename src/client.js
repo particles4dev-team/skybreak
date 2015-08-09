@@ -3,7 +3,6 @@
 import React from 'react';
 import Router from 'react-router';
 import nconf from 'nconf';
-import routes from './components/Routes';
 
 // import css
 require('../_themes/universe/sass/main.scss');
@@ -24,6 +23,8 @@ let config = JSON.parse(
 );
 
 nconf.defaults(config);
+console.log(nconf.get('layouts'));
+const routes = require('../_themes/' + nconf.get('layouts') + '/components/Routes');
 
 let payload = JSON.parse(
     document.getElementById('payload').textContent
