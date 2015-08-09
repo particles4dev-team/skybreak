@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 let Sidebar = React.createClass({
     render: function () {
@@ -14,7 +15,7 @@ let Sidebar = React.createClass({
                     </a>
                     <nav>
                         <ul className="primary-navigation text-uppercase">
-                            <li className="nav h5"><a href="/" title="Home">Home</a></li>
+                            <li className="nav h5"><Link to="home" title="Home">Home</Link></li>
                             <li className="nav h5"><a href="/about" title="About">About</a></li>
                             <li className="nav h5"><a href="/buy" title="Buy Theme">Buy Theme</a></li>
                             <li className="nav h5"><a href="/documentation" title="Documentation">Documentation</a></li>
