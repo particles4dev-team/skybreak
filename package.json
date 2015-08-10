@@ -21,6 +21,7 @@
     "express": "^4.13.1",
     "handlebars": "^3.0.3",
     "lodash": "^3.10.0",
+    "moment": "^2.10.6",
     "nconf": "^0.7.1",
     "node-dir": "^0.1.8",
     "react": "^0.13.3",

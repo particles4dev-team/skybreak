@@ -11,6 +11,7 @@ const t = require('transducers.js');
 const { seq, compose, map, filter } = t;
 const PROD = process.env.NODE_ENV === 'production';
 
+require('./loadJsonFiles');
 require('../_config');
 // convert .md to .json
 require.context(

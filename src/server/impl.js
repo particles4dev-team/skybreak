@@ -1,10 +1,23 @@
 const dir = require('node-dir');
 const fs = require('fs');
 const path = require('path');
+const moment = require( 'moment');
 
 function getFileName (fullPath) {
     return fullPath.replace(/^.*[\\\/]/, '');
 }
+// http://www.rubydoc.info/github/mojombo/jekyll/Jekyll/Post
+// YEAR-MONTH-DAY-title.MARKUP
+// 2011-12-31-new-years-eve-is-awesome.md
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec
+// 2015-02-20-index.post.json
+function getDate (post) {
+    let postRegex = /^(.+\/)*(\d+-\d+-\d+)-(.*)(\.[^.]+)$/g;
+    let r = postRegex.exec(post);
+    if (!r)
+        return new Date();
+    return new Date(r[2] + 'T00:00:00');
+};
 
 let getPosts = function (routerName) {
     let data = [];
@@ -20,12 +33,17 @@ let getPosts = function (routerName) {
                 if (err) { throw err; }
                 content = JSON.parse(content);
                 content._id = getFileName(file);
+                content.createdAt = getDate(content._id);
                 data.push(content);
                 next();
             },
 
             function (err, /**files*/) {
                 if (err) { throw err; }
+
+                data.sort(function compare(a, b) {
+                    return - moment(a.createdAt).diff(b.createdAt, 'minutes')
+                });
                 if (routerName) {
                     resolve({
                         data: {

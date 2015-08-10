@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import _ from 'lodash';
+import moment from 'moment';
 const PostsMixin = require("mixin/Posts");
 
 const COLORS = [
@@ -36,7 +37,15 @@ let CirclePost = React.createClass({
                 <Link to="post" params={{id: this.props._id}}>
                     <div className="thumb-wrapper vertical-align text-center round">
                         <div className="thumb-caption island vertical-align text-center round" style={{background}}>
-                            <h5 className="block trimtext" style={{"wordWrap": "break-word"}}>{this.props.title}</h5>
+                            <div className="thumb-quote">
+                                <p className="t5 block trimtext" style={{"wordWrap": "break-word"}}>
+                                {this.props.title}
+                                </p>
+                     
+                                <h6 className="block text-uppercase text-muted">
+                                {moment(this.props.createdAt).format("MMM D, YYYY")}
+                                </h6>
+                            </div>
                         </div>
                     </div>
                 </Link>

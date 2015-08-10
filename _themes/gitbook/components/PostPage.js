@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import axios from 'axios';
+import moment from 'moment';
 
 const Disqus            = require("_includes/disqus");
 const ShareSocialMedia  = require("_includes/shareSocialMedia");
@@ -34,7 +35,7 @@ let Post = React.createClass({
                 </header>
 
                 <div className="post-content col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-                    <h6 className="post-date text-uppercase">Posted on July 2, 2015</h6>
+                    <h6 className="post-date text-uppercase">Posted on {moment(post.createdAt).format("MMM D, YYYY")}</h6>
                     <div className="post-text pad-top-triple pad-bottom-triple">
                         <div className="post-answer" dangerouslySetInnerHTML={{__html: post.content}}></div>
                     </div>
@@ -52,8 +53,11 @@ let Post = React.createClass({
                     <hr />
                     <ul className="post-tags list-unstyled list-inline t6 text-uppercase text-center pad-bottom-double">
                         <li className="post-tags-title"><i className="fa fa-tags"></i></li>
-                        <li><a href="http://mood.themelantic.com/tagged/answer" title="answer" className="tag-link">answer</a></li>
-                        <li><a href="http://mood.themelantic.com/tagged/new" title="new" className="tag-link">new</a></li>
+                       {post.tags.map(function(tag, i){
+                            return <li>
+                                <Link to="home">{tag}</Link>
+                            </li>;
+                        })}
                     </ul>
                 </div>
 
