@@ -4,6 +4,10 @@ var fs                          = require('fs');
 var glob                        = require('glob');
 var importFiles                 = require('./importFiles');
 
+// load config
+var yaml                        = require('js-yaml');
+var _config = yaml.load(fs.readFileSync('_config.yml', 'utf8'));
+
 // https://github.com/webpack/extract-text-webpack-plugin
 var ExtractTextPlugin   = require('extract-text-webpack-plugin');
 
@@ -40,7 +44,9 @@ module.exports = {
     // http://webpack.github.io/docs/configuration.html#entry
     // The entry point for the bundle.
     entry: [
-        '../src/client.js'
+        '../src/client.js',
+        // import css
+        path.join(__dirname, '../_themes/', _config.public.layouts, '/sass/main.scss')
     ],
     // http://webpack.github.io/docs/configuration.html#output
     output: {
@@ -103,11 +109,18 @@ module.exports = {
             {
                 test: /\.js?$/,
                 loaders: ['babel'],
-                include: [path.join(__dirname, '../src'), path.join(__dirname, '../_includes'), path.join(__dirname, '../_themes')]
+                include: [
+                    path.join(__dirname, '../src'),
+                    path.join(__dirname, '../_includes'),
+                    path.join(__dirname, '../_themes/', _config.public.layouts)
+                ]
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract('css!sass?sourceMap')
+                loader: ExtractTextPlugin.extract('css!sass?sourceMap'),
+                include: [
+                    path.join(__dirname, '../_themes/', _config.public.layouts)
+                ]
             }
         ]
     },

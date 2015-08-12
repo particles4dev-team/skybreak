@@ -30,4 +30,3 @@ build
 npm-debug.log
 REFERENCE.md
 .DS_Store
-config/config-prod.json

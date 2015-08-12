@@ -10,6 +10,7 @@ const Router = require('react-router');
 const t = require('transducers.js');
 const { seq, compose, map, filter } = t;
 const PROD = process.env.NODE_ENV === 'production';
+const DocMeta = require("react-doc-meta");
 
 require('./loadJsonFiles');
 require('../_config');
@@ -29,8 +30,6 @@ nconf.argv().env().file({
 
 });
 
-// import template.html (copy from theme to build folder)
-require('../_themes/' + nconf.get('public:layouts') + '/template.html');
 const routes = require('../_themes/' + nconf.get('public:layouts') + '/components/Routes');
 
 let app = express();
@@ -110,15 +109,31 @@ app.use('*', function (req, res) {
     });
 });
 
+function objToString (obj) {
+    var str = '';
+    for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            str += p + '="' + obj[p] + '" ';
+        }
+    }
+    return str;
+}
+
 function parseHTML (res, data, Handler) {
     let html = React.renderToString(<Handler data={data} />);
+    let metaTags = '';
+    DocMeta.rewind().map((tag, index) =>
+        metaTags += (`<meta data-doc-meta="true" key="${index}" ${ objToString(tag) }/>`))
+
     let result = appTemplate({
         content: html,
         payload: JSON.stringify(data),
+        metaTags: metaTags,
         // bodyClass: bodyClass,
         configClient: JSON.stringify(nconf.get('public')),
         title: nconf.get('public:general:title') + ' | ' + nconf.get('public:layouts'),
-        webpackURL: PROD ? '/public/' : nconf.get('webpackURL') + '/dist/'
+        webpackURL: PROD ? '/public/' : nconf.get('webpackURL') + '/dist/',
+        publicURL: PROD ? '/public/' : nconf.get('url') + '/public/'
     });
     res.send(result);
 }

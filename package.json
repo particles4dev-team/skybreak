@@ -2,6 +2,7 @@
   "name": "skybreak",
   "version": "0.7.0",
   "description": "",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "npm run develop",
@@ -12,7 +13,7 @@
     "start-server": "./bin/run",
     "clean": "gulp clean"
   },
-  "author": "",
+  "author": "Le Hoang <particle4dev@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.5.4",
@@ -25,6 +26,7 @@
     "nconf": "^0.7.1",
     "node-dir": "^0.1.8",
     "react": "^0.13.3",
+    "react-doc-meta": "^0.2.0",
     "react-router": "^0.13.3",
     "transducers.js": "^0.3.2"
   },
@@ -40,6 +42,7 @@
     "glob": "^5.0.14",
     "gulp": "^3.9.0",
     "gulp-notify": "^2.2.0",
+    "js-yaml": "^3.3.1",
     "json-loader": "^0.5.2",
     "markdown-with-front-matter-loader": "^0.1.0",
     "node-sass": "^3.2.0",

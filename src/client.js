@@ -21,9 +21,6 @@ let config = JSON.parse(
 
 nconf.defaults(config);
 
-// import css
-require('../_themes/' + nconf.get('layouts') + '/sass/main.scss');
-
 const routes = require('../_themes/' + nconf.get('layouts') + '/components/Routes');
 
 let payload = JSON.parse(

@@ -1,10 +1,39 @@
 import React from 'react';
 
 let Sidebar = React.createClass({
-  render: function () {
+
+    addScript: function () {
+        var child = this.pollyfill = document.createElement('script');
+        var parent = document.getElementsByTagName('head')[0] ||
+                     document.getElementsByTagName('body')[0];
+
+        child.async = true;
+        child.type = 'text/javascript';
+        child.src = '/public/pollyfill.js';
+
+        parent.appendChild(child);
+    },
+
+    removeScript: function () {
+        if (this.pollyfill && this.pollyfill.parentNode) {
+            this.pollyfill.parentNode.removeChild(this.pollyfill);
+            this.pollyfill = null;
+        }
+    },
+
+    componentDidMount: function () {
+        this.addScript();
+    },
+
+    componentWillUnmount: function () {
+        this.removeScript();
+    },
+
+    render: function () {
     return (
         <div>
-            <section className={this.props.className}>
+            <section id="intro" className={this.props.className}>
+                <canvas id="pollyfill-canvas"></canvas>
                 <span className="menu-trigger animated fadeInDown">
                     <span className="bar"></span>
                     <span className="bar"></span>
@@ -45,7 +74,7 @@ let Sidebar = React.createClass({
         {/* end sidebar */}
         </div>
     );
-  }
+    }
 });
 
 module.exports = Sidebar;

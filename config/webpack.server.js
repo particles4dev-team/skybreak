@@ -4,6 +4,10 @@ var fs                          = require('fs');
 var MyPlugin                    = require('./myplugin');
 var importFiles                 = require('./importFiles');
 
+// load config
+var yaml                        = require('js-yaml');
+var _config = yaml.load(fs.readFileSync('_config.yml', 'utf8'));
+
 var node_modules = {};
 fs.readdirSync('node_modules')
 .filter(function(x) {
@@ -48,7 +52,9 @@ module.exports = {
     // http://webpack.github.io/docs/configuration.html#entry
     // The entry point for the bundle.
     entry: [
-        './src/server.js'
+        './src/server.js',
+        // import template.html (copy from theme to build folder)
+        path.join(__dirname, '../_themes/', _config.public.layouts, '/template.html')
     ],
     // http://webpack.github.io/docs/configuration.html#module
     // Options affecting the normal modules (NormalModuleFactory)
@@ -66,7 +72,11 @@ module.exports = {
             test: /\.js?$/,
             loaders: ['babel'],
             exclude: /node_modules/,
-            include: [path.join(__dirname, '../src'), path.join(__dirname, '../_includes'), path.join(__dirname, '../_themes')]
+            include: [
+                path.join(__dirname, '../src'),
+                path.join(__dirname, '../_includes'),
+                path.join(__dirname, '../_themes/', _config.public.layouts)
+            ]
         },
         {
             test: /\.md$/,

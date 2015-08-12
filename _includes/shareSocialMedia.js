@@ -10,7 +10,12 @@ let ShareSocialMedia = React.createClass({
         if(nconf.get('general:twitter'))
             tweetShare += ('&via=' + nconf.get('general:twitter'));
         return (
-        <div>
+        <div className="col-xs-12 single-content" style={{
+            'border-top': 'solid 1px #f5f5f5',
+            'line-height': '30px',
+            'padding': '10px 0px',
+            'margin-top': '15px'
+        }}>
             <section className="share col-sm-6">
                 <h4 className="section-title">Share Post</h4>
                 <a className="btn btn-default btn-sm twitter"
@@ -33,7 +38,10 @@ let ShareSocialMedia = React.createClass({
             </section>
 
             <section className="col-sm-6 author">
-                <img width="80" src={ picture } className="img-rounded author-image" />
+                <img width="80" src={ picture } className="img-rounded author-image" style={{
+                    'float': 'left',
+                    'margin-right': '20px'
+                }}/>
                 <h4 className="section-title author-name">{ name }</h4>
                 <p className="author-bio">{ bio }</p>
             </section>
