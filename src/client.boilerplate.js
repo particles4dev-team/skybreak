@@ -21,7 +21,7 @@ let config = JSON.parse(
 
 nconf.defaults(config);
 
-const routes = require('../_themes/universe/components/Routes');
+const routes = require('../_themes/<%= layouts %>/components/Routes');
 
 let payload = JSON.parse(
     document.getElementById('payload').textContent

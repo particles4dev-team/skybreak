@@ -54,7 +54,9 @@ module.exports = {
     entry: [
         './src/server.js',
         // import template.html (copy from theme to build folder)
-        path.join(__dirname, '../_themes/', _config.public.layouts, '/template.html')
+        path.join(__dirname, '../_themes/', _config.public.layouts, '/template.html'),
+        // config
+        path.join(__dirname, '../_config')
     ],
     // http://webpack.github.io/docs/configuration.html#module
     // Options affecting the normal modules (NormalModuleFactory)

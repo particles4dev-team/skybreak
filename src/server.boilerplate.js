@@ -28,7 +28,7 @@ nconf.argv().env().file({
 
 });
 
-const routes = require('../_themes/universe/components/Routes');
+const routes = require('../_themes/<%= layouts %>/components/Routes');
 
 let app = express();
 app.use(bodyParser.json());

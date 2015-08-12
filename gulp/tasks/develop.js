@@ -8,6 +8,7 @@ var path                = require('path');
 var nodemon             = require('nodemon');
 var runSequence         = require('run-sequence');
 var ExtractTextPlugin   = require('extract-text-webpack-plugin');
+var child_process       = require('child_process');
 var backend             = require('../../config/webpack.server');
 var configWatch         = require('../../config/webpack.client-watch');
 
@@ -24,7 +25,14 @@ function onBuild(err, stats) {
     console.log(stats.toString(outputOptions));
 }
 
-gulp.task('develop', ['watch:server', 'watch:client']);
+gulp.task('develop', [
+    'build:server_boilerplate',
+    'build:client_boilerplate',
+    'watch:server_boilerplate',
+    'watch:client_boilerplate',
+    'watch:server',
+    'watch:client'
+]);
 
 gulp.task('watch:server', ['watch:backend'], function(done) {
     // https://github.com/remy/nodemon
@@ -70,20 +78,33 @@ gulp.task('watch:backend', function (done) {
     });
 });
 
-var child_process       = require('child_process');
 gulp.task('watch:client', function(done) {
-  // node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client-watch.js
-  // node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config config/webpack.client-watch.js
-  // https://github.com/webpack/webpack-dev-server/blob/master/bin/webpack-dev-server.js
-  var child = child_process.exec('node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client-watch.js && node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config config/webpack.client-watch.js',
-      function (error, stdout, stderr) {
-          // console.log(error, stdout, stderr);
-      done();
-  });
-  child.stdout.on('data', function(buf) {
-      console.log('%s', String(buf));
-  });
-  child.stderr.on('data', function (buf) {
-      console.error('%s', String(buf));
-  });
+    // node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client-watch.js
+    // node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config config/webpack.client-watch.js
+    // https://github.com/webpack/webpack-dev-server/blob/master/bin/webpack-dev-server.js
+    var child = child_process.exec('node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config config/webpack.client-watch.js && node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config config/webpack.client-watch.js',
+        function (error, stdout, stderr) {
+            // console.log(error, stdout, stderr);
+        done();
+    });
+    child.stdout.on('data', function(buf) {
+        console.log('%s', String(buf));
+    });
+    child.stderr.on('data', function (buf) {
+        console.error('%s', String(buf));
+    });
+});
+
+gulp.task('watch:server_boilerplate', function () {
+    gulp.watch([
+        './src/server.boilerplate.js',
+        './_config.yml'
+    ], ['build:server_boilerplate']);
+});
+
+gulp.task('watch:client_boilerplate', function () {
+    gulp.watch([
+        './src/client.boilerplate.js',
+        './_config.yml'
+    ], ['build:client_boilerplate']);
 });
