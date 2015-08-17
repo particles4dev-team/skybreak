@@ -9,7 +9,9 @@ module.exports = {
             dest + '/public/client.js',
             dest + '/public/style/*',
             dest + '/_config.skybreak.json',
-            dest + '/template.html'
+            dest + '/template.html',
+            src  + '/server.js',
+            src  + '/client.js'
         ]
     }
 };
